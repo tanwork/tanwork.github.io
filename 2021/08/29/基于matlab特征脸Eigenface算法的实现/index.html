@@ -49,18 +49,6 @@
 
 <body>
 
-    <div class="clock-container">
-      <div class="clock">
-        <div class="needle hour"></div>
-        <div class="needle minute"></div>
-        <div class="needle second"></div>
-        <div class="center-point"></div>
-      </div>
-
-      <div class="time"></div>
-      <div class="date"></div>
-    </div>
-
     <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
 
     <div class="wrapper">
@@ -121,6 +109,68 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -150,7 +200,36 @@
         </header>
 
         <div class="post-content">
-            
+            <h1 id="1-特征脸算法简介"><a href="#1-特征脸算法简介" class="headerlink" title="1. 特征脸算法简介"></a>1. 特征脸算法简介</h1><blockquote>
+<p>​        特征脸算法是将人脸从像素空间变换到另外一个空间，在另外一个空间做相似性的计算。特征量不能再像素空间直接进行相似性计算在于原像素空间中不同类别的图像在分布上很难用个简单的线或者面把他们切分开，然后如果变换到另一个空间，就可以很好的把他们分开了。这里我们用到的PAC（Principal Component Analysis）从而得到特征脸。</p>
+</blockquote>
+<h1 id="2-PCA"><a href="#2-PCA" class="headerlink" title="2.PCA"></a>2.PCA</h1><h2 id="2-1什么是PCA"><a href="#2-1什么是PCA" class="headerlink" title="2.1什么是PCA"></a>2.1什么是PCA</h2><blockquote>
+<p>​        PCA（principal components analysis）即主成分分析技术，又称主分量分析。主成分分析也称主分量分析，旨在利用降维的思想，把多指标转化为少数几个综合指标。<br>在统计学中，主成分分析PCA是一种简化数据集的技术。它是一个线性变换。这个变换把数据变换到一个新的坐标系统中，使得任何数据投影的第一大方差在第一个坐标(称为第一主成分)上，第二大方差在第二个坐标(第二主成分)上，依次类推。主成分分析经常用于减少数据集的维数，同时保持数据集的对方差贡献最大的特征。这是通过保留低阶主成分，忽略高阶主成分做到的。这样低阶成分往往能够保留住数据的最重要方面。但是，这也不是一定的，要视具体应用而定。</p>
+</blockquote>
+<h2 id="2-2PCA实现步骤（附matlab代码）"><a href="#2-2PCA实现步骤（附matlab代码）" class="headerlink" title="2.2PCA实现步骤（附matlab代码）"></a>2.2PCA实现步骤（附matlab代码）</h2><h3 id="2-2-1-前期准备"><a href="#2-2-1-前期准备" class="headerlink" title="2.2.1 前期准备"></a>2.2.1 前期准备</h3><blockquote>
+<p>​        接下来我们需要使用ORL Faces人脸数据库实现特征脸的提取，对于人脸数据库，大家可自行选择。</p>
+</blockquote>
+<h3 id="2-2-2-具体步骤"><a href="#2-2-2-具体步骤" class="headerlink" title="2.2.2 具体步骤"></a>2.2.2 具体步骤</h3><p>（1）获取数据，将图像的进行列拼接，然后合成一个大矩阵，该矩阵中每一列都是一个图像的列拼接。可以通过matlab实现如下：</p>
+<blockquote>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;humanNum=<span class="number">40</span>;    <span class="comment">%人数</span></span><br><span class="line">trainNum=<span class="number">9</span>;     <span class="comment">%每个人的训练级人数</span></span><br><span class="line">eigenFaceNum=<span class="number">20</span> <span class="comment">%取特征向量数量</span></span><br><span class="line">imgL=<span class="number">112</span>;       <span class="comment">%图像长宽</span></span><br><span class="line">imgW=<span class="number">92</span>;</span><br><span class="line">faceData=<span class="built_in">zeros</span>(imgL*imgW,trainNum*humanNum);<span class="comment">%脸矩阵分配空间</span></span><br></pre></td></tr></table></figure>
+
+<p>对于图像的长宽获得，可以通过在matlab中导入图像后，点击查看图像的长宽。我们需要将图像进行列拼接，每个图像将占据（imgW<em>imgL）</em>1，训练集图像为9，于是我们声明以上空间的数组。</p>
+ <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:humanNum</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:trainNum</span><br><span class="line">      path = [<span class="string">&#x27;F:\orl_faces\s&#x27;</span>,num2str(<span class="built_in">j</span>),<span class="string">&#x27;\&#x27;,num2str(i),&#x27;</span>.pgm&#x27;];</span><br><span class="line">         tempFace = imread(path);</span><br><span class="line">         faceData(:,(<span class="built_in">j</span><span class="number">-1</span>)*trainNum+<span class="built_in">i</span>)=<span class="built_in">reshape</span>(tempFace, [], <span class="number">1</span>);  <span class="comment">%进行列向拼接</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p> （2）计算求每行图像的平均值，然后每一行减去该平均值，由于平均值是共同分量，减去可以将数据值减小，同时并不影响数据间的差值，对于后期的求特征值特征向量会更加简便。</p>
+ <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%求平均脸</span></span><br><span class="line"> avgface=<span class="built_in">mean</span>(faceData,<span class="number">2</span>);<span class="comment">%平均脸（一列）</span></span><br><span class="line"> <span class="comment">%减去平均脸</span></span><br><span class="line"> A=faceData;</span><br><span class="line"> <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:humanNum*trainNum</span><br><span class="line">       A(:,<span class="built_in">i</span>)=A(:,<span class="built_in">i</span>)-avgface;</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p> （3）求特征值和特征向量</p>
+ <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">convT=A&#x27;*A;              <span class="comment">%求协方差矩阵的转置 10304*10304</span></span><br><span class="line"> [Vs,Ds]= eig(convT);     <span class="comment">%求特征向量，特征值 </span></span><br><span class="line"> D=Ds;V=Vs;        </span><br><span class="line"> Dtemp=<span class="built_in">abs</span>(<span class="built_in">diag</span>(D));       <span class="comment">%转化成列向量</span></span><br><span class="line"> ind=<span class="built_in">find</span>(Dtemp&lt;<span class="number">1e-6</span>);     <span class="comment">%寻找0特征值</span></span><br><span class="line"> </span><br><span class="line"> Dtemp(ind)=[];            <span class="comment">%去除相应的特征值</span></span><br><span class="line"> V(:,ind)=[];              <span class="comment">%去除相应的特征向量</span></span><br><span class="line"> </span><br><span class="line"> [DD,ind]=<span class="built_in">sort</span>(Dtemp,<span class="string">&#x27;descend&#x27;</span>);<span class="comment">%将特征值从大到小排列</span></span><br><span class="line"> </span><br><span class="line"> V=V(:,ind);                    <span class="comment">%将特征向量按特征值从大到小排列</span></span><br></pre></td></tr></table></figure>
+<p> （4）取特征向量，按理说特征向量越多，在后面的人脸识别中会更加准确。</p>
+ <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%取前eigenFaceNum个特征向量</span></span><br><span class="line"> <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:eigenFaceNum</span><br><span class="line">       VG(:,<span class="built_in">i</span>)=V(:,<span class="built_in">i</span>);</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p> 以上为PCA的主要步骤，接下来我们进行特征脸的显示。</p>
+ <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">EigenVectors=A*VG;     <span class="comment">%将A向特征空间映射</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">%转化成特征脸</span></span><br><span class="line"> <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:eigenFaceNum</span><br><span class="line">  tempA=<span class="built_in">reshape</span>(EigenVectors(:,<span class="built_in">j</span>),<span class="number">112</span>, <span class="number">92</span>);   <span class="comment">%将平均脸数据构成平均脸图象</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">j</span>==<span class="number">1</span>)</span><br><span class="line">         eigenVectorsImg=tempA;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">         eigenVectorsImg=[eigenVectorsImg,tempA];  <span class="comment">%将特征脸拼接成一个图片</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p> 测试集进行匹配，将数据分为测试集和训练集，大家可根据自己的人脸数据库中每个人物的图片数来分。识别率较低，就增加训练集，减少测试集。</p>
+ <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 一个图片进行匹配</span></span><br><span class="line"> s=<span class="number">5</span>;</span><br><span class="line"> number=<span class="number">10</span>;</span><br><span class="line"> path = [<span class="string">&#x27;F:\orl_faces\s&#x27;</span>,num2str(s),<span class="string">&#x27;\&#x27;,num2str(number),&#x27;</span>.pgm&#x27;];</span><br><span class="line"> comimg=imread(path);</span><br><span class="line"> comFaceData=<span class="built_in">reshape</span>(comimg, [], <span class="number">1</span>);</span><br><span class="line"> comFaceData=double(comFaceData);</span><br><span class="line"> comFaceData=comFaceData-avgface;</span><br><span class="line"> W1=(comFaceData&#x27;)*EigenVectors;   <span class="comment">%计算特征区域的投影坐标</span></span><br><span class="line"> </span><br><span class="line"> distance=<span class="built_in">zeros</span>(rows,<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:rows</span><br><span class="line">  tempW=W(<span class="built_in">i</span>,:);</span><br><span class="line">  distance(<span class="built_in">i</span>)=pdist2(W1,tempW);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    [m,index]=<span class="built_in">min</span>(distance);         <span class="comment">%在特征区域找最小距离</span></span><br><span class="line"> matchImg=<span class="built_in">reshape</span>(faceData(:,index),<span class="number">112</span>, <span class="number">92</span>);<span class="comment">%匹配图片</span></span><br><span class="line"> matchNum=<span class="built_in">ceil</span>(index/trainNum);</span><br><span class="line"> </span><br><span class="line"> <span class="built_in">figure</span>(<span class="number">3</span>)</span><br><span class="line"> subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line"> imshow(comimg,[]);</span><br><span class="line"> title([<span class="string">&#x27;被识别图片，来自第&#x27;</span>,num2str(s),<span class="string">&quot;组人像&quot;</span>])</span><br><span class="line"> subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line"> imshow(matchImg,[]);</span><br><span class="line"> <span class="keyword">if</span>(s==matchNum)</span><br><span class="line">  title([<span class="string">&#x27;匹配图片成功，匹配第&#x27;</span>,num2str(matchNum),<span class="string">&quot;组人像&quot;</span>])</span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line">     title([<span class="string">&#x27;匹配图片失败，匹配第&#x27;</span>,num2str(matchNum),<span class="string">&quot;组人像&quot;</span>])</span><br><span class="line"> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><blockquote>
+<p>​    人脸识别算法在目前社会应用中十分广泛，但是其基本原理并不难，也算是入门级的机器学习算法了。但是在实际应用中需要考虑的条件会变得更多。我们在使用脸库里面的数据集进行学习和预测时，这条件偏向于理想化。实际上对外部事物进行采集的图像，像素和光照等方面都对于预测结果有很大的影响。本次我们采用的数据级的图片像素为112*92大小，但是在实际采集的图片中，人脸的数据级可能远远小于这个像素，那么我们就要对需要预测的图片进行放大，怎么放大呢？均值补值法？DTFT？这些方法都有应用，在之后的博客内容中，我也会进行实验。</p>
+</blockquote>
+
         </div>
 
         
