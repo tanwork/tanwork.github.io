@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Tan.L">
+
+
+
+
+
+<title>LeetCode-165-比较版本号 | RonaldoIsFine’s</title>
+
+
+
+    <link rel="icon" href="/image/top.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">RonaldoIsFine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">RonaldoIsFine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">LeetCode-165-比较版本号</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Tan.L</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 1, 2021&nbsp;&nbsp;16:26:39</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/LeetCode/">LeetCode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="165-比较版本号"><a href="#165-比较版本号" class="headerlink" title="165.比较版本号"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/compare-version-numbers/">165.比较版本号</a></h1><ul>
+<li><p><strong>题目</strong></p>
+<p>​        给你两个版本号 version1 和 version2 ，请你比较它们。</p>
+<p>版本号由一个或多个修订号组成，各修订号由一个 ‘.’ 连接。每个修订号由 多位数字 组成，可能包含 前导零 。每个版本号至少包含一个字符。修订号从左到右编号，下标从 0 开始，最左边的修订号下标为 0 ，下一个修订号下标为 1 ，以此类推。例如，2.5.33 和 0.1 都是有效的版本号。</p>
+<p>比较版本号时，请按从左到右的顺序依次比较它们的修订号。比较修订号时，只需比较 忽略任何前导零后的整数值 。也就是说，修订号 1 和修订号 001 相等 。如果版本号没有指定某个下标处的修订号，则该修订号视为 0 。例如，版本 1.0 小于版本 1.1 ，因为它们下标为 0 的修订号相同，而下标为 1 的修订号分别为 0 和 1 ，0 &lt; 1 。</p>
+</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入：version1 = “1.01”, version2 = “1.001”<br>输出：0<br>解释：忽略前导零，”01” 和 “001” 都表示相同的整数 “1”</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：version1 = “1.0”, version2 = “1.0.0”<br>输出：0<br>解释：version1 没有指定下标为 2 的修订号，即视为 “0”</p>
+</blockquote>
+<ul>
+<li><p>难度：中等</p>
+</li>
+<li><p>分类：多看</p>
+</li>
+<li><p>题解</p>
+<p>这道题是种典型的字符串比较，那么我的基本的解题思路就是将**”.”<strong>与</strong>“.”**隔离开的数据进行比较，当然还需要考虑一个字符串没有，另外字符串还有的情况，那么这个时候只需要对还有字符串进行进行这个操作，判断点与点之间的数值是否大于0，解题思路很简单，下面我们看代码。 代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareVersion</span><span class="params">(String version1, String version2)</span> </span>&#123;</span><br><span class="line"> 	<span class="keyword">int</span> index1=<span class="number">0</span>,index2=<span class="number">0</span>;</span><br><span class="line"> 	<span class="keyword">int</span> num1=<span class="number">0</span>;</span><br><span class="line"> 	<span class="keyword">int</span> num2=<span class="number">0</span>;</span><br><span class="line"> 	<span class="keyword">while</span>(index1&lt;version1.length()&amp;&amp;index2&lt;version2.length()) &#123;</span><br><span class="line"> 		num1=<span class="number">0</span>;</span><br><span class="line"> 		num2=<span class="number">0</span>;</span><br><span class="line"> 		<span class="keyword">while</span>(index1&lt;version1.length()&amp;&amp;version1.charAt(index1)&gt;=<span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line"> 			num1=num1*<span class="number">10</span>+version1.charAt(index1)-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"> 			index1++;</span><br><span class="line"> 		&#125;</span><br><span class="line"> 		<span class="keyword">while</span>(index2&lt;version2.length()&amp;&amp;version2.charAt(index2)&gt;=<span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line"> 			num2=num2*<span class="number">10</span>+version2.charAt(index2)-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"> 			index2++;</span><br><span class="line"> 		&#125;</span><br><span class="line"> 		<span class="keyword">if</span>(num1&gt;num2) &#123;</span><br><span class="line"> 			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> 		&#125;</span><br><span class="line"> 		<span class="keyword">else</span> <span class="keyword">if</span>(num1&lt;num2) &#123;</span><br><span class="line"> 			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"> 		&#125;</span><br><span class="line"> 		<span class="keyword">else</span> &#123;</span><br><span class="line">	index1++;</span><br><span class="line">	index2++;</span><br><span class="line">&#125;</span><br><span class="line"> 		</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	</span><br><span class="line"> 	<span class="keyword">if</span>(index1&lt;version1.length()) &#123;</span><br><span class="line"> 		num1=<span class="number">0</span>;</span><br><span class="line"> 		<span class="keyword">while</span>(index1&lt;version1.length()) &#123;</span><br><span class="line">     		<span class="keyword">while</span>(index1&lt;version1.length()&amp;&amp;version1.charAt(index1)&gt;=<span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">     			num1=num1*<span class="number">10</span>+version1.charAt(index1)-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">     			index1++;</span><br><span class="line">     		&#125;</span><br><span class="line">     		<span class="keyword">if</span>(num1&gt;<span class="number">0</span>) &#123;</span><br><span class="line">     			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">     		&#125;</span><br><span class="line">     		index1++;</span><br><span class="line"> 		&#125;</span><br><span class="line">  </span><br><span class="line"> 	&#125;</span><br><span class="line"> 	<span class="keyword">else</span> <span class="keyword">if</span>(index2&lt;version2.length()) &#123;</span><br><span class="line"> 		<span class="keyword">while</span>(index2&lt;version2.length()) &#123;</span><br><span class="line">     		num2=<span class="number">0</span>;</span><br><span class="line">     		<span class="keyword">while</span>(index2&lt;version2.length()&amp;&amp;version2.charAt(index2)&gt;=<span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">     			num2=num2*<span class="number">10</span>+version2.charAt(index2)-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">     			index2++;</span><br><span class="line">     		&#125;</span><br><span class="line">     		<span class="keyword">if</span>(num2&gt;<span class="number">0</span>) &#123;</span><br><span class="line">     			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">     		&#125;</span><br><span class="line">     		index2++;</span><br><span class="line"> 		&#125;</span><br><span class="line"> 		</span><br><span class="line">  </span><br><span class="line"> 	&#125;</span><br><span class="line"> 	</span><br><span class="line"> 	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么按照以上方式提交的结果则是：</p>
+<p><img src="/2021/09/01/LeetCode-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/lc1651.png"></p>
+<p>可见取得的效果还行，再执行时间上超过了百分之百的用户，但是内存消耗过多，主要是用于指针和计算数值的num1和num2。那么自己已经做完了这题，我们再来看看题解的方法与我们的差别是什么。</p>
+</li>
+<li><p>优化</p>
+<p>可以发现我的方法的解题思路和题解的解题思路基本上一致，但是题解的方法更加直接，因为我都代码是在边写边改的，所以代码逻辑没有那么直接，并且体量庞大。那么用题解代码有一个好处就是，他不需要再对较长数据在进行操作，而是在一个循环中就操作完了，这个方法很巧妙，那么我按照题解的思路，独立完成优化算法，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareVersion</span><span class="params">(String version1, String version2)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n=version1.length();</span><br><span class="line">	<span class="keyword">int</span> m=version2.length();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> index1=<span class="number">0</span>,index2=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(index1&lt;n||index2&lt;m) &#123;</span><br><span class="line">		<span class="keyword">int</span> num1=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(;index1&lt;n&amp;&amp;version1.charAt(index1)!=<span class="string">&#x27;.&#x27;</span>;index1++) &#123;</span><br><span class="line">			num1=num1*<span class="number">10</span>+version1.charAt(index1)-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		index1++;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> num2=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(;index2&lt;m&amp;&amp;version2.charAt(index2)!=<span class="string">&#x27;.&#x27;</span>;index2++) &#123;</span><br><span class="line">			num2=num2*<span class="number">10</span>+version2.charAt(index2)-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		index2++;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(num1&gt;num2) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(num1&lt;num2) &#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么取得的结果为：</p>
+<p><img src="/2021/09/01/LeetCode-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/lc1652.png"></p>
+<p>在这里我还想再提一下，如何<strong>优化提高执行用时</strong>，我们能够看到在这个程序中，我们要获取字符串长度，于是我们一开始就写了这个语句：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n=version1.length();</span><br><span class="line"><span class="keyword">int</span> m=version2.length();</span><br></pre></td></tr></table></figure>
+
+<p>那么这个语句也不难理解，就是将字符串长度分别赋给n，m，这样子做的原因在于执行获取字符串长度这个函数需要花费时间的，他不像一些对象的length属性，那么调用这个属性不需要花时间，而调用函数需要执行函数里面的内容，那么就是花时间的。所以这个也是一个优化的小窍门！</p>
+<hr>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/compare-version-numbers">https://leetcode-cn.com/problems/compare-version-numbers</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Tan.L</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://tanwork.github.io/2021/09/01/LeetCode-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/">https://tanwork.github.io/2021/09/01/LeetCode-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/LeetCode/"># LeetCode</a>
+                    
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
+                    
+                        <a href="/tags/LeetCode-%E6%8C%87%E9%92%88/"># LeetCode-指针</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/08/31/LeetCode-1109-%E8%88%AA%E7%8F%AD%E9%A2%84%E8%AE%A2%E7%BB%9F%E8%AE%A1/">LeetCode-1109.航班预订统计</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Tan.L | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),     //置于主页面背后
+            o: n(i, "opacity", .5),     //线条透明度
+            c: n(i, "color", "0,0,0"),  //线条颜色
+            n: n(i, "count", 100)    //线条数量
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+
+</body>
+
+</html>
+
