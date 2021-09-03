@@ -275,13 +275,13 @@
 <p>我们上面也提到了，对于多维的情况，我们分别定义如下：</p>
 <p>多维假设函数：<br>$$<br>h_\theta(x)=\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x_3+\theta_4x_4+…….<br>$$<br>对于这种情况，我们更希望用矩阵来表示：</p>
 <p>首先我们令$x_0=1$那么我们的有：</p>
-<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/code\Blog\version2\myBlog\source_posts\ml2.png"></p>
+<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/ml2.png"></p>
 <p>同样的我们有:</p>
-<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/code\Blog\version2\myBlog\source_posts\ml3.png"></p>
+<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/ml3.png"></p>
 <p>那么多维的假设函数表示如下:</p>
-<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/code\Blog\version2\myBlog\source_posts\ml4.png"></p>
+<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/ml4.png"></p>
 <p>那么多维的损失函数表示如下:</p>
-<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/code\Blog\version2\myBlog\source_posts\ml5.png"></p>
+<p><img src="/2021/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/ml5.png"></p>
 </li>
 <li><p>梯度下降算法</p>
 <p>我们需要求到合适的$\theta_0和\theta_1$使损失函数的值达到最小，这里我们就要引入梯度下降算法，如下：<br>$$<br>\theta_0:=\theta_0-\alpha\frac{\partial{J(\theta)}}{\partial{\theta_0}}<br>$$</p>
