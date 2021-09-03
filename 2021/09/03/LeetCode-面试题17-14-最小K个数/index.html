@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <meta name="author" content="Tan.L">
+
+
+
+
+
+<title>LeetCode-面试题17.14-最小K个数 | RonaldoIsFine’s</title>
+
+
+
+    <link rel="icon" href="/image/top.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">RonaldoIsFine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">RonaldoIsFine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">LeetCode-面试题17.14-最小K个数</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Tan.L</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 3, 2021&nbsp;&nbsp;9:40:36</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/LeetCode/">LeetCode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="面试题-17-14-最小K个数"><a href="#面试题-17-14-最小K个数" class="headerlink" title="面试题 17.14. 最小K个数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/smallest-k-lcci/">面试题 17.14. 最小K个数</a></h1><ul>
+<li><p><strong>题目</strong></p>
+<p>设计一个算法，找出数组中最小的k个数。以任意顺序返回这k个数均可。</p>
+</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入： arr = [1,3,5,7,2,4,6,8], k = 4<br>输出： [1,2,3,4]</p>
+</blockquote>
+<ul>
+<li><p>难度：中等</p>
+</li>
+<li><p>分类：多看</p>
+</li>
+<li><p>题解</p>
+<p>首先看到题，我的第一思路就是暴力破解，先数组排列，然后取前k个值返回。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] smallestK(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k) &#123;</span><br><span class="line">    	Arrays.sort(arr);</span><br><span class="line">    	<span class="keyword">int</span> []res=<span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;i++) &#123;</span><br><span class="line">    		res[i]=arr[i];</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么按照以上方式提交的结果则是：</p>
+<p><img src="/2021/09/03/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9817-14-%E6%9C%80%E5%B0%8FK%E4%B8%AA%E6%95%B0/lc%E9%9D%A2%E8%AF%9517-14-1.png"></p>
+</li>
+<li><p>优化</p>
+<p>那么通过暴力破解的方法，我们可以看见是能够通过测试的，但是这种中等题不可能就让我们用暴力破解的方法就结束了。这里我们可以想想之前做过的每日一题<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-median-from-data-stream/">295. 数据流的中位数</a>，这里我们用到了大小堆进行排序，那么这题我们也可以用到这个大小堆，对于大堆来说，父节点比子节点值更大。小堆则是子节点比父节点更大。在这题中，我们可以通过先入堆<strong>k</strong>个数，那么他会将最大的数排序到根节点上，我们再比较根节点与接下来数组的值的大小，若大，则将根节点弹出再入堆数组值，若小则继续下一个。一直将数组遍历一遍。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] smallestK(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k) &#123;</span><br><span class="line">    	<span class="comment">//大堆，父节点的值比子节点值大</span></span><br><span class="line">    	PriorityQueue&lt;Integer&gt; min=<span class="keyword">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;(b-a));</span><br><span class="line">    	<span class="keyword">int</span> []res=<span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">    	</span><br><span class="line">    	<span class="comment">//不采用这个方法讲所有的值全部放入堆栈，因为序列越长，堆栈排列时间越长，并且堆栈的排序并不是严格的排序，也就是说它排序的标准是：父亲节点的值比子节点大，但是父亲的两个左右子节点，并不是左边的一定比右子节点小。</span></span><br><span class="line"><span class="comment">//    	for(int i=0;i&lt;arr.length;i++) &#123;</span></span><br><span class="line"><span class="comment">//    		min.add(arr[i]);</span></span><br><span class="line"><span class="comment">//    	&#125;</span></span><br><span class="line"><span class="comment">//    	</span></span><br><span class="line">    	<span class="keyword">if</span>(k==<span class="number">0</span>) &#123;</span><br><span class="line">    		<span class="keyword">return</span> res;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="comment">//先放入k个数进行排列</span></span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;i++) &#123;</span><br><span class="line">    		min.offer(arr[i]);</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=k;i&lt;arr.length;i++) &#123;</span><br><span class="line">    		<span class="keyword">if</span>(arr[i]&lt;min.peek()) &#123;</span><br><span class="line">    			min.poll();</span><br><span class="line">        		min.offer(arr[i]);	</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;i++) &#123;</span><br><span class="line">    		res[i]=min.poll();</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么取得的结果为：</p>
+<p><img src="/2021/09/03/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9817-14-%E6%9C%80%E5%B0%8FK%E4%B8%AA%E6%95%B0/lc295-2.png"></p>
+</li>
+<li><p>再优化</p>
+</li>
+</ul>
+<p>通过上面的结果其实我们能够发现，在执行时间上还是太低，那么我们知道这道题的解题思路是排序，那么我们可以考虑对数组进行快速排序，来提升排序的时间复杂度。</p>
+<p>一趟快速排序的算法是：</p>
+<p>1）设置两个变量i、j，排序开始的时候：i=0，j=N-1；</p>
+<p>2）以第一个数组元素作为关键数据，赋值给<strong>key</strong>，即<strong>key</strong>=A[0]；</p>
+<p>3）从j开始向前搜索，即由后开始向前搜索(j–)，找到第一个小于<strong>key</strong>的值A[j]，将A[j]和A[i]的值交换；</p>
+<p>4）从i开始向后搜索，即由前开始向后搜索(i++)，找到第一个大于<strong>key</strong>的A[i]，将A[i]和A[j]的值交换；</p>
+<p>5）重复第3、4步，直到i==j； (3,4步中，没找到符合条件的值，即3中A[j]不小于<strong>key</strong>,4中A[i]不大于<strong>key</strong>的时候改变j、i的值，使得j=j-1，i=i+1，直至找到为止。找到符合条件的值，进行交换的时候i， j指针位置不变。另外，i==j这一过程一定正好是i+或j-完成的时候，此时令循环结束。</p>
+<p>当然通过上面的讲诉还是过于抽象，，下面我们举个例子来说明：</p>
+<blockquote>
+<p>假设一开始序列{xi}是：5，3，7，6，4，1，0，2，9，10，8。</p>
+<p>此时，ref=5，i=1，j=10，从后往前找，第一个比5小的数是x8=2，因此序列为：2，3，7，6，4，1，0，5，9，10，8。</p>
+<p>此时i=1，j=8，从前往后找，第一个比5大的数是x3=7，因此序列为：2，3，5，6，4，1，0，7，9，10，8。</p>
+<p>此时，i=3，j=8，从第8位往前找，第一个比5小的数是x7=0，因此：2，3，0，6，4，1，5，7，9，10，8。</p>
+<p>此时，i=3，j=7，从第3位往后找，第一个比5大的数是x4=6，因此：2，3，0，5，4，1，6，7，9，10，8。</p>
+<p>此时，i=4，j=7，从第7位往前找，第一个比5小的数是x6=1，因此：2，3，0，1，4，5，6，7，9，10，8。</p>
+<p>此时，i=4，j=6，从第4位往后找，直到第6位才有比5大的数，这时，i=j=6，ref成为一条分界线，它之前的数都比它小，之后的数都比它大，对于前后两部分数，可以采用同样的方法来排序。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] smallestK(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k) &#123;</span><br><span class="line">    	sort(arr,<span class="number">0</span>, arr.length-<span class="number">1</span> );</span><br><span class="line">    	<span class="keyword">int</span> []res=<span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;i++) &#123;</span><br><span class="line">    		res[i]=arr[i];</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> low, <span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = low;</span><br><span class="line">        <span class="keyword">int</span> j = height;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; j) &#123;<span class="comment">//放在k之前，防止下标越界</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> k = a[i];</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; j &amp;&amp; a[j] &gt; k) &#123; <span class="comment">//找出小的数</span></span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; j &amp;&amp; a[i] &lt;= k) &#123; <span class="comment">//找出大的数</span></span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; j) &#123;<span class="comment">//交换</span></span><br><span class="line">                <span class="keyword">int</span> swap = a[i];</span><br><span class="line">                a[i] = a[j];</span><br><span class="line">                a[j] = swap;</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">        &#125;</span><br><span class="line">         <span class="comment">//交换K</span></span><br><span class="line">        k = a[i];</span><br><span class="line">        a[i] = a[low];</span><br><span class="line">        a[low] = k;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">//对左边进行排序,递归算法</span></span><br><span class="line">        sort(a, low, i - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//对右边进行排序</span></span><br><span class="line">        sort(a, i + <span class="number">1</span>, height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/smallest-k-lcci">https://leetcode-cn.com/problems/smallest-k-lcci</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Tan.L</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://tanwork.github.io/2021/09/03/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9817-14-%E6%9C%80%E5%B0%8FK%E4%B8%AA%E6%95%B0/">https://tanwork.github.io/2021/09/03/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9817-14-%E6%9C%80%E5%B0%8FK%E4%B8%AA%E6%95%B0/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/LeetCode/"># LeetCode</a>
+                    
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
+                    
+                        <a href="/tags/LeetCode-%E6%95%B0%E7%BB%84/"># LeetCode-数组</a>
+                    
+                        <a href="/tags/LeetCode-%E6%8E%92%E5%BA%8F/"># LeetCode-排序</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/09/03/LeetCode-295-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">LeetCode-295-数据流的中位数</a>
+            
+            
+            <a class="next" rel="next" href="/2021/09/02/LeetCode-%E5%89%91%E6%8C%87Offer22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/">LeetCode-剑指Offer22-链表中倒数第k个节点</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Tan.L | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),     //置于主页面背后
+            o: n(i, "opacity", .5),     //线条透明度
+            c: n(i, "color", "0,0,0"),  //线条颜色
+            n: n(i, "count", 100)    //线条数量
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+
+</body>
+
+</html>
+

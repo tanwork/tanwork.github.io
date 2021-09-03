@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-剑指Offer22-链表中倒数第k个节点 | RonaldoIsFine’s</title>
+<title>LeetCode-295-数据流的中位数 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-剑指Offer22-链表中倒数第k个节点</h1>
+            <h1 class="post-title">LeetCode-295-数据流的中位数</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 2, 2021&nbsp;&nbsp;10:32:24</a>
+                        Date: <a href="#">September 3, 2021&nbsp;&nbsp;9:53:58</a>
                         </span>
                     
                     
@@ -242,39 +242,35 @@
         </header>
 
         <div class="post-content">
-            <h1 id="剑指Offer22-链表中倒数第k个节点"><a href="#剑指Offer22-链表中倒数第k个节点" class="headerlink" title="剑指Offer22-链表中倒数第k个节点"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/">剑指Offer22-链表中倒数第k个节点</a></h1><ul>
+            <h1 id="295-数据流的中位数"><a href="#295-数据流的中位数" class="headerlink" title="295. 数据流的中位数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-median-from-data-stream/">295. 数据流的中位数</a></h1><ul>
 <li><p><strong>题目</strong></p>
-<p>输入一个链表，输出该链表中倒数第k个节点。为了符合大多数人的习惯，本题从1开始计数，即链表的尾节点是倒数第1个节点。</p>
-<p>例如，一个链表有 6 个节点，从头节点开始，它们的值依次是 1、2、3、4、5、6。这个链表的倒数第 3 个节点是值为 4 的节点。</p>
+<p>中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。</p>
+<p>例如，</p>
+<p>[2,3,4] 的中位数是 3</p>
+<p>[2,3] 的中位数是 (2 + 3) / 2 = 2.5</p>
+<p>设计一个支持以下两种操作的数据结构：</p>
+<p>void addNum(int num) - 从数据流中添加一个整数到数据结构中。<br>double findMedian() - 返回目前所有元素的中位数。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>给定一个链表: 1-&gt;2-&gt;3-&gt;4-&gt;5, 和 k = 2.</p>
-<p>返回链表 4-&gt;5.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;addNum(1)</span><br><span class="line">&gt;addNum(2)</span><br><span class="line">&gt;findMedian() -&gt; 1.5</span><br><span class="line">&gt;addNum(3) </span><br><span class="line">&gt;findMedian() -&gt; 2</span><br></pre></td></tr></table></figure>
 </blockquote>
 <ul>
-<li><p>难度：简单</p>
+<li><p>难度：困难</p>
 </li>
-<li><p>分类：了解</p>
+<li><p>分类：多做</p>
 </li>
 <li><p>题解</p>
-<p>该题作为简单题其实也是很简单的，主要是用到了双指针来作为快慢指针，相信大家看代码就能立刻知道怎么回事，所以这里不需要赘述，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">getKthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    	ListNode pre=head;</span><br><span class="line">    	ListNode res=head;</span><br><span class="line">    	<span class="keyword">while</span>(k--&gt;<span class="number">0</span>) &#123;</span><br><span class="line">    		pre=pre.next;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">while</span>(pre!=<span class="keyword">null</span>) &#123;</span><br><span class="line">    		pre=pre.next;</span><br><span class="line">    		res=res.next;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运用到了新知识，大小堆。大堆是完全二叉树，里面按照父节点比子节点大排列，小堆是父节点值比子节点小排列。通过大小堆的入堆和出堆，便能够对序列进行排列，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MedianFinder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">	</span><br><span class="line">	PriorityQueue&lt;Integer&gt; max;</span><br><span class="line">	PriorityQueue&lt;Integer&gt; min;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MedianFinder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//小堆</span></span><br><span class="line">    	max=<span class="keyword">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;(a-b));</span><br><span class="line">    	<span class="comment">//大堆</span></span><br><span class="line">    	min=<span class="keyword">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;(b-a));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">    	max.add(num);</span><br><span class="line">    	min.add(max.poll());</span><br><span class="line">    	<span class="keyword">if</span>(min.size()&gt;max.size()) &#123;</span><br><span class="line">    		max.add(min.poll());</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(max.size()==min.size()) &#123;</span><br><span class="line">    		<span class="keyword">return</span> (<span class="keyword">double</span>)(max.peek()+min.peek())/<span class="number">2</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> max.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2021/09/02/LeetCode-%E5%89%91%E6%8C%87Offer22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/%E5%89%91%E6%8C%87Offer22-1.png"></p>
-</li>
-<li><p>优化</p>
-<p>我们通过结果能够看出在内存消耗方面其实不够的，那么我们再进行优化试试。我们这用到了两个指针，但是实际上我们只需要一个指针变量即可。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">getKthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    	ListNode pre=head;</span><br><span class="line">    	<span class="keyword">while</span>(k--&gt;<span class="number">0</span>) &#123;</span><br><span class="line">    		pre=pre.next;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">while</span>(pre!=<span class="keyword">null</span>) &#123;</span><br><span class="line">    		pre=pre.next;</span><br><span class="line">    		head=head.next;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于这种简单题，它的内存消耗一般不大，那么我们这样子简单改进之后，取得的结果也是进步很大，那么取得的结果为：</p>
-<p><img src="/2021/09/02/LeetCode-%E5%89%91%E6%8C%87Offer22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/%E5%89%91%E6%8C%87Offer22-2.png"></p>
+<p><img src="/2021/09/03/LeetCode-295-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/lc295-1.png"></p>
 </li>
 </ul>
 <hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof">https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-median-from-data-stream">https://leetcode-cn.com/problems/find-median-from-data-stream</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -289,7 +285,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/02/LeetCode-%E5%89%91%E6%8C%87Offer22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/">https://tanwork.github.io/2021/09/02/LeetCode-%E5%89%91%E6%8C%87Offer22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/03/LeetCode-295-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">https://tanwork.github.io/2021/09/03/LeetCode-295-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/</a></span>
                     </p>
                 
                 
@@ -305,11 +301,11 @@
                     
                         <a href="/tags/LeetCode/"># LeetCode</a>
                     
-                        <a href="/tags/LeetCode-%E6%8C%87%E9%92%88/"># LeetCode-指针</a>
+                        <a href="/tags/LeetCode-%E5%9B%B0%E9%9A%BE/"># LeetCode-困难</a>
                     
-                        <a href="/tags/LeetCode-%E7%AE%80%E5%8D%95/"># LeetCode-简单</a>
+                        <a href="/tags/LeetCode-%E5%A4%9A%E5%81%9A/"># LeetCode-多做</a>
                     
-                        <a href="/tags/LeetCode-%E4%BA%86%E8%A7%A3/"># LeetCode-了解</a>
+                        <a href="/tags/LeetCode-%E5%A0%86/"># LeetCode-堆</a>
                     
                         
                 </span>
@@ -322,10 +318,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/03/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9817-14-%E6%9C%80%E5%B0%8FK%E4%B8%AA%E6%95%B0/">LeetCode-面试题17.14-最小K个数</a>
             
-            
-            <a class="next" rel="next" href="/2021/09/01/LeetCode-165-%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/">LeetCode-165-比较版本号</a>
+            <a class="next" rel="next" href="/2021/09/03/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9817-14-%E6%9C%80%E5%B0%8FK%E4%B8%AA%E6%95%B0/">LeetCode-面试题17.14-最小K个数</a>
             
         </section>
 
