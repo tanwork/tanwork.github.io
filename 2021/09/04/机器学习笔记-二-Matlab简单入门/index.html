@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-剑指offer10-1-斐波那契数列 | RonaldoIsFine’s</title>
+<title>机器学习笔记(二)-Matlab简单入门 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-剑指offer10-1-斐波那契数列</h1>
+            <h1 class="post-title">机器学习笔记(二)-Matlab简单入门</h1>
             
                 <div class="post-meta">
                     
@@ -226,68 +226,101 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 4, 2021&nbsp;&nbsp;9:27:17</a>
+                        Date: <a href="#">September 4, 2021&nbsp;&nbsp;21:18:38</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/LeetCode/">LeetCode</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h1 id="剑指-Offer-10-I-斐波那契数列"><a href="#剑指-Offer-10-I-斐波那契数列" class="headerlink" title="剑指 Offer 10- I. 斐波那契数列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/">剑指 Offer 10- I. 斐波那契数列</a></h1><ul>
-<li><p><strong>题目</strong></p>
-<p>写一个函数，输入 <code>n</code> ，求斐波那契（Fibonacci）数列的第 <code>n</code> 项（即 <code>F(N)</code>）。斐波那契数列的定义如下：</p>
-<blockquote>
-<p>F(0) = 0,   F(1) = 1<br>F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</p>
-</blockquote>
-<p>斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。</p>
-<p>答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。</p>
+            <h1 id="机器学习笔记（二）Matlab简单入门"><a href="#机器学习笔记（二）Matlab简单入门" class="headerlink" title="机器学习笔记（二）Matlab简单入门"></a>机器学习笔记（二）Matlab简单入门</h1><h2 id="1-简单入门"><a href="#1-简单入门" class="headerlink" title="1.简单入门"></a>1.简单入门</h2><ul>
+<li><p>rand(n,m)，生成n行m列的随机矩阵</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-1.PNG"></p>
+</li>
+<li><p>randn(n,m)，生成n行m列的随机高斯随机矩阵（均值为0，方差为1）</p>
 </li>
 </ul>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：n = 2</span><br><span class="line">&gt;输出：1</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：n = 5</span><br><span class="line">&gt;输出：5</span><br></pre></td></tr></table></figure>
-</blockquote>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-2.PNG"></p>
 <ul>
-<li><p>难度：简单</p>
+<li><p>eye(m,n)生成对角矩阵</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-3.PNG"></p>
 </li>
-<li><p>分类：了解</p>
+<li><p>who/whos显示所有变量</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-4.PNG"></p>
 </li>
-<li><p>题解</p>
-<p>这道题是很经典的递归题，也是大家入门递归会经常看见的一道题，那么这道题我们就用动态规划做。动态规划对空间复杂度消耗高，但是其运算速度是非常快的，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&lt;<span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> n;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> []nums=<span class="keyword">new</span> <span class="keyword">int</span> [n+<span class="number">1</span>];</span><br><span class="line">	nums[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">	nums[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;n+<span class="number">1</span>;i++) &#123;</span><br><span class="line">		nums[i]=(nums[i-<span class="number">1</span>]+nums[i-<span class="number">2</span>])%<span class="number">1000000007</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> nums[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/lcoffer10-1-1.PNG"></p>
+<li><p>A(:) 矩阵拼接成列向量</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-5.PNG"></p>
 </li>
-<li><p>递归</p>
-<p>前面都提到了这是一道典型的递归题，那么这里我们就要详细讲一讲递归了。对于递归来说，就是不断地调用直接来达到目的的方法。那么递归函数包含三个反面：退出条件，本轮函数需要干什么，返回什么。（为了方便大家理解，大家可以参照下面的代码理解，但是该代码并不能通过本题，因为会超时，只是为了方便大家理解）</p>
-<p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//退出条件</span></span><br><span class="line">	<span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> n;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//本轮操作</span></span><br><span class="line">    <span class="keyword">int</span> num=fib(n-<span class="number">1</span>)+fib(n-<span class="number">2</span>);</span><br><span class="line">    <span class="comment">//返回什么	</span></span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在本次题目中，我们需要不断计算前两次的值，一直计算到$n=0和n=1$的情况，所以说，函数在这个条件下就停止了，所以这个就是退出条件，这个时候返回的值是确定的值，不能再是与自己函数相关的值了，那样递归不会结束，也不会有出口，直接导致函数结束不了。</p>
-<p>接下来，我们看本轮需要干什么，当前我们得到的数是n，那么我们知道我们需要返回的数值是输入为$n-1和n-2$返回数值的和，于是本轮我们需要计算这个数值。</p>
-<p>最后，我们需要返回什么，我们需要将我们计算的数值进行返回。</p>
-<p>以上就是解本题的步骤，递归是一个很好用的工具，大家需要多刷些递归的题目，来进行理解。</p>
-<p>那么本题其实并不适用于直接用递归来解决的原因是会出现重复的计算，那么可以通过下面这个图片来理解：</p>
-<p><img src="/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/lcoffer10-1-2.jpg"></p>
-<p>我们可以看见它出现了重复运算的情况，那么这个时候我们就要用到动态规划的数组，对已经计算的值进行储存，这样就不需要再重复计算了。</p>
+<li><p>A([a b],:) 返回只含有a行，b行的矩阵，可以这样子记，<strong>左行右列，同时matlab的index是从1开始的</strong>。</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-6.PNG"></p>
+</li>
+<li><p>A.*B 点乘是对应元素相乘，同理 点除，点加等</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-7.PNG"></p>
+</li>
+<li><p>log(v)则是$lnv$</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-8.PNG"></p>
+</li>
+<li><p>exp(v)则是$e^v$</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-9.PNG"></p>
+</li>
+<li><p>abs(v)则是v的绝对值</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-10.PNG"></p>
+</li>
+<li><p>ones(n,m)生成n行m列1矩阵</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-11.PNG"></p>
+</li>
+<li><p>[val,index]=max(a)  val是向量a的最大值，index是该最大值的序号</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-12.PNG"></p>
+</li>
+<li><p>magic(n),生成n行n列的矩阵，任意行，列，对角线加起来为相同值</p>
 </li>
 </ul>
-<hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof">https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-13.PNG"></p>
+<ul>
+<li>prod(a) a中所有元素相乘</li>
+</ul>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-14.PNG"></p>
+<ul>
+<li>floor(a)  向下取整</li>
+</ul>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-15.PNG"></p>
+<ul>
+<li>ceil(a) 向上取整</li>
+</ul>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-16.PNG"></p>
+<ul>
+<li>max(A,[],1) 获取每一列的最大值（默认）</li>
+</ul>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-17.PNG"></p>
+<ul>
+<li>max(A,[],2)获取每一行的最大值（默认）</li>
+</ul>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-18.PNG"></p>
+<ul>
+<li><p>A’ 转置</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-19.PNG"></p>
+</li>
+<li><p>flipud 区别于转置，垂直替换</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-23.PNG"></p>
+</li>
+<li><p>find(a&lt;3)  找到小于满足条件的索引，注意对于矩阵的索引是从上到下一列一列的，然后再从左到右的顺序编排的索引</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-21.PNG"></p>
+</li>
+<li><p>a&lt;3</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-22.PNG"></p>
+</li>
+<li><p>load(‘filename’) 将文件数据导入</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-24.PNG"></p>
+</li>
+<li><p>A(:,a) 取第a列数据</p>
+<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-25.PNG"></p>
+</li>
+<li><p>当一个指令后不加”;”则会显示当前变量的值，加了则不显示。</p>
+</li>
+</ul>
+<h2 id="2-总结"><a href="#2-总结" class="headerlink" title="2.总结"></a>2.总结</h2><p>那么上面是一些简单入门的matlab的指令，大家看过一遍其实就能够理解，当然自己再写一遍对于记忆会更加深刻。上面的一些指令对于大家入门matlab对于矩阵的操作还是远远不够的，大家可以自行搜索一些资料来完善自己的知识结构，但是不一定要记住，因为搜一下大家就能得到答案。</p>
 
         </div>
 
@@ -302,7 +335,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/">https://tanwork.github.io/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">https://tanwork.github.io/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/</a></span>
                     </p>
                 
                 
@@ -316,13 +349,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/LeetCode/"># LeetCode</a>
-                    
-                        <a href="/tags/LeetCode-%E7%AE%80%E5%8D%95/"># LeetCode-简单</a>
-                    
-                        <a href="/tags/LeetCode-%E4%BA%86%E8%A7%A3/"># LeetCode-了解</a>
-                    
-                        <a href="/tags/LeetCode-%E9%80%92%E5%BD%92%EF%BC%8CLeetCode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"># LeetCode-递归，LeetCode-动态规划</a>
+                        <a href="/tags/Machine-Learning/"># Machine Learning</a>
                     
                         
                 </span>
@@ -335,10 +362,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">机器学习笔记(二)-Matlab简单入门</a>
             
-            
-            <a class="next" rel="next" href="/2021/09/03/LeetCode-295-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">LeetCode-295-数据流的中位数</a>
+            <a class="next" rel="next" href="/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/">LeetCode-剑指offer10-1-斐波那契数列</a>
             
         </section>
 
