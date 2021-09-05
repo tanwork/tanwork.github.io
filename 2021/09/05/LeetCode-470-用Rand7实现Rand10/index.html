@@ -14,7 +14,7 @@
 
 
 
-<title>机器学习笔记(二)-Matlab简单入门 | RonaldoIsFine’s</title>
+<title>LeetCode-470-用Rand7实现Rand10 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">机器学习笔记(二)-Matlab简单入门</h1>
+            <h1 class="post-title">LeetCode-470-用Rand7实现Rand10</h1>
             
                 <div class="post-meta">
                     
@@ -226,14 +226,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 4, 2021&nbsp;&nbsp;21:18:38</a>
+                        Date: <a href="#">September 5, 2021&nbsp;&nbsp;13:45:02</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Machine-Learning/">Machine Learning</a>
+                                <a href="/categories/LeetCode/">LeetCode</a>
                             
                         </span>
                     
@@ -242,92 +242,125 @@
         </header>
 
         <div class="post-content">
-            <h1 id="机器学习笔记（二）Matlab简单入门"><a href="#机器学习笔记（二）Matlab简单入门" class="headerlink" title="机器学习笔记（二）Matlab简单入门"></a>机器学习笔记（二）Matlab简单入门</h1><h2 id="1-简单入门"><a href="#1-简单入门" class="headerlink" title="1.简单入门"></a>1.简单入门</h2><ul>
-<li><p>rand(n,m)，生成n行m列的随机矩阵</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-1.PNG"></p>
-</li>
-<li><p>randn(n,m)，生成n行m列的随机高斯随机矩阵（均值为0，方差为1）</p>
+            <h4 id="470-用-Rand7-实现-Rand10"><a href="#470-用-Rand7-实现-Rand10" class="headerlink" title="470. 用 Rand7() 实现 Rand10()"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-rand10-using-rand7/">470. 用 Rand7() 实现 Rand10()</a></h4><ul>
+<li><p><strong>题目</strong></p>
+<p>已有方法 rand7 可生成 1 到 7 范围内的均匀随机整数，试写一个方法 rand10 生成 1 到 10 范围内的均匀随机整数。</p>
+<p>不要使用系统的 Math.random() 方法。</p>
 </li>
 </ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-2.PNG"></p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>题目给的示例有些问题，因为给的函数是没有输入的，所以调用函数后直接生成均匀1到10的均匀随机整数即可。</p>
+</blockquote>
 <ul>
-<li><p>eye(m,n)生成对角矩阵</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-3.PNG"></p>
+<li><p>难度：中等</p>
 </li>
-<li><p>who/whos显示所有变量</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-4.PNG"></p>
+<li><p>分类：多看</p>
 </li>
-<li><p>A(:) 矩阵拼接成列向量</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-5.PNG"></p>
+<li><p>题解</p>
+<p>题解中给出的最多的方法也是比较简单能够想到的方法就是这个方法：题目要求尽量少调用rand7()，那么我们考虑就调用两次的情况会生成如下矩阵：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+<tr>
+<td>5</td>
+<td>9</td>
+<td>10</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>\</td>
+<td>\</td>
+</tr>
+<tr>
+<td>7</td>
+<td>\</td>
+<td>\</td>
+<td>\</td>
+<td>\</td>
+<td>\</td>
+<td>\</td>
+<td>\</td>
+</tr>
+</tbody></table>
+<p>也就是我们生成两个随机的rand7，然后将他们相乘，落入$[1,40]$范围内的数，我们则需要，在范围外的数我们则舍去，然后再生成一次。对于范围内的数，我们则通过取余数操作使其落在$[1,10]$范围内返回即可，该方法其实不止能生成rand10。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> <span class="keyword">extends</span> <span class="title">SolBase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rand10</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> col=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> val=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            row=rand7();</span><br><span class="line">            col=rand7();</span><br><span class="line">            val=col+(row-<span class="number">1</span>)*<span class="number">7</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(val&gt;<span class="number">40</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (val)%<span class="number">10</span>+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么按照以上方式提交的结果则是：</p>
+<p><img src="/2021/09/05/LeetCode-470-%E7%94%A8Rand7%E5%AE%9E%E7%8E%B0Rand10/lc470-1.png"></p>
+<p>通过以上结果我们能够得知效果还行，但是如果生成的数一直大于40，那么会一直进入循环状态中，会大大增加时间复杂度，直到无穷，所以这个方法有效但是还是存在着弊端。</p>
 </li>
-<li><p>A([a b],:) 返回只含有a行，b行的矩阵，可以这样子记，<strong>左行右列，同时matlab的index是从1开始的</strong>。</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-6.PNG"></p>
-</li>
-<li><p>A.*B 点乘是对应元素相乘，同理 点除，点加等</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-7.PNG"></p>
-</li>
-<li><p>log(v)则是$lnv$</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-8.PNG"></p>
-</li>
-<li><p>exp(v)则是$e^v$</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-9.PNG"></p>
-</li>
-<li><p>abs(v)则是v的绝对值</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-10.PNG"></p>
-</li>
-<li><p>ones(n,m)生成n行m列1矩阵</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-11.PNG"></p>
-</li>
-<li><p>[val,index]=max(a)  val是向量a的最大值，index是该最大值的序号</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-12.PNG"></p>
-</li>
-<li><p>magic(n),生成n行n列的矩阵，任意行，列，对角线加起来为相同值</p>
+<li><p>优化</p>
+<p>优化的方法也是不断生成rand7的随机数，但是不是直接生成两个rand7随机数，而是一次次递进生成。在上面的方法中我们先生成了两个rand7随机数，其范围为[1:49]，然后我们舍去了[41,49]，9个数，我们也可以进一步表示为[1:9],然后我们再调用一次rand7,与前面9个数组成的范围就达到了[1:63]，那么我们又会舍弃[61:63]–&gt;[1:3]3个数，我们再调用一次rand7，生成范围达到[1:21]，我们再舍弃[21:21]，这个时候我们再从头开始生成两个rand7即可，那么具体代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rand10</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> val;    </span><br><span class="line">  </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> col=rand7();</span><br><span class="line">        <span class="keyword">int</span> row=rand7();</span><br><span class="line">        val=col+(row-<span class="number">1</span>)*<span class="number">7</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(val&lt;<span class="number">41</span>) &#123;</span><br><span class="line">        	<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        col=val-<span class="number">40</span>;</span><br><span class="line">        row=rand7();</span><br><span class="line">        val=col+(row-<span class="number">1</span>)*<span class="number">9</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(val&lt;<span class="number">61</span>) &#123;</span><br><span class="line">        	<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        col=val-<span class="number">60</span>;</span><br><span class="line">        row=rand7();</span><br><span class="line">        val=col+(row-<span class="number">1</span>)*<span class="number">2</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(val&lt;<span class="number">21</span>) &#123;</span><br><span class="line">        	<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> val%<span class="number">10</span>+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么取得的结果为：</p>
+<p><img src="/2021/09/05/LeetCode-470-%E7%94%A8Rand7%E5%AE%9E%E7%8E%B0Rand10/lc470-2.png"></p>
+<p>我相信大家不但对题解感兴趣，同时对LeetCode如何进行测试这个算法也很感兴趣！我也是。</p>
 </li>
 </ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-13.PNG"></p>
-<ul>
-<li>prod(a) a中所有元素相乘</li>
-</ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-14.PNG"></p>
-<ul>
-<li>floor(a)  向下取整</li>
-</ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-15.PNG"></p>
-<ul>
-<li>ceil(a) 向上取整</li>
-</ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-16.PNG"></p>
-<ul>
-<li>max(A,[],1) 获取每一列的最大值（默认）</li>
-</ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-17.PNG"></p>
-<ul>
-<li>max(A,[],2)获取每一行的最大值（默认）</li>
-</ul>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-18.PNG"></p>
-<ul>
-<li><p>A’ 转置</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-19.PNG"></p>
-</li>
-<li><p>flipud 区别于转置，垂直替换</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-23.PNG"></p>
-</li>
-<li><p>find(a&lt;3)  找到小于满足条件的索引，注意对于矩阵的索引是从上到下一列一列的，然后再从左到右的顺序编排的索引</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-21.PNG"></p>
-</li>
-<li><p>a&lt;3</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-22.PNG"></p>
-</li>
-<li><p>load(‘filename’) 将文件数据导入</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-24.PNG"></p>
-</li>
-<li><p>A(:,a) 取第a列数据</p>
-<p><img src="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/ml-25.PNG"></p>
-</li>
-<li><p>当一个指令后不加”;”则会显示当前变量的值，加了则不显示。</p>
-</li>
-</ul>
-<h2 id="2-总结"><a href="#2-总结" class="headerlink" title="2.总结"></a>2.总结</h2><p>那么上面是一些简单入门的matlab的指令，大家看过一遍其实就能够理解，当然自己再写一遍对于记忆会更加深刻。上面的一些指令对于大家入门matlab对于矩阵的操作还是远远不够的，大家可以自行搜索一些资料来完善自己的知识结构，但是不一定要记住，因为搜一下大家就能得到答案。</p>
+<hr>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-rand10-using-rand7">https://leetcode-cn.com/problems/implement-rand10-using-rand7</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -342,7 +375,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">https://tanwork.github.io/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/05/LeetCode-470-%E7%94%A8Rand7%E5%AE%9E%E7%8E%B0Rand10/">https://tanwork.github.io/2021/09/05/LeetCode-470-%E7%94%A8Rand7%E5%AE%9E%E7%8E%B0Rand10/</a></span>
                     </p>
                 
                 
@@ -356,7 +389,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Machine-Learning/"># Machine Learning</a>
+                        <a href="/tags/LeetCode/"># LeetCode</a>
+                    
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
                     
                         
                 </span>
@@ -369,10 +406,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/05/LeetCode-470-%E7%94%A8Rand7%E5%AE%9E%E7%8E%B0Rand10/">LeetCode-470-用Rand7实现Rand10</a>
             
-            
-            <a class="next" rel="next" href="/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/">LeetCode-剑指offer10-1-斐波那契数列</a>
+            <a class="next" rel="next" href="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">机器学习笔记(二)-Matlab简单入门</a>
             
         </section>
 
