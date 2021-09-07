@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <meta name="author" content="Tan.L">
+
+
+
+
+
+<title>LeetCode-787- K 站中转内最便宜的航班 | RonaldoIsFine’s</title>
+
+
+
+    <link rel="icon" href="/image/top.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">RonaldoIsFine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">RonaldoIsFine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">LeetCode-787- K 站中转内最便宜的航班</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Tan.L</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 7, 2021&nbsp;&nbsp;11:24:10</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/LeetCode/">LeetCode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="787-K-站中转内最便宜的航班"><a href="#787-K-站中转内最便宜的航班" class="headerlink" title="787. K 站中转内最便宜的航班"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cheapest-flights-within-k-stops/">787. K 站中转内最便宜的航班</a></h1><ul>
+<li><p><strong>题目</strong></p>
+<p>有 n 个城市通过一些航班连接。给你一个数组 flights ，其中 flights[i] = [fromi, toi, pricei] ，表示该航班都从城市 fromi 开始，以价格 pricei 抵达 toi。</p>
+<p>现在给定所有的城市和航班，以及出发城市 src 和目的地 dst，你的任务是找到出一条最多经过 k 站中转的路线，使得从 src 到 dst 的 价格最便宜 ，并返回该价格。 如果不存在这样的路线，则输出 -1。</p>
+</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入:<br>n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]<br>src = 0, dst = 2, k = 1<br>输出: 200</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入:<br>n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]<br>src = 0, dst = 2, k = 0<br>输出: 500</p>
+</blockquote>
+<ul>
+<li><p>难度：中等</p>
+</li>
+<li><p>分类：多看</p>
+</li>
+<li><p>题解</p>
+<p>解这道题，最好的理解方式还是通过例子来介绍。首先我们要知道，k为中转城市个数，那么我们中专k个城市，需要飞行k+1次。比如中转1个城市，那么出发城市-&gt;中转城市-&gt;目的地城市，相当于我们飞了2次。搞懂了这个之后，我们用示例1来讲解这个题：</p>
+<p>一共有三个城市，那么我们可以声明下面这个数组储存数据，数组为n维的。</p>
+<p><strong>这个数组是用来储存出发地src到各个城市的距离的，所以首先初始化各个距离为max，max为Integer类型所能储存最大的数。</strong></p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>max</td>
+<td>max</td>
+<td>max</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>然后src-&gt;src的距离为0，所以我们将这个距离设为0：</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>max</td>
+<td>max</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>然后我们遍历一次数组，找到出发地是src的数据，更新数组：</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+<td>500</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>这样我们就完成了整个数组的初始化，我们开始第二次遍历，首先也是初始化数组</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>城市0</th>
+<th>城市1</th>
+<th>城市2</th>
+<th>城市3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+<td>500</td>
+<td>max</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>max</td>
+<td>max</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>这时，我们遍历数组，首先我们看到第一条数据[0,1,100]，是城市0到城市1的距离100，这个时候我们比较上一次（0次时）城市src到城市0的距离（0-&gt;0距离为0）+100与次数1直接到城市1的距离，我们能够得到（0+100&lt;max），所以我们的赋值如下：</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>城市0</th>
+<th>城市1</th>
+<th>城市2</th>
+<th>城市3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+<td>500</td>
+<td>max</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>100</td>
+<td>max</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>然后我们看第二条数据：[1,2,100]，表示从城市1到城市2距离100，这时我们比较上一次（0次时）城市src到城市1的距离(0-&gt;1距离为100)+100与次数1直接到城市2的距离(100+100&lt;max)，所以我们赋值如下：</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>城市0</th>
+<th>城市1</th>
+<th>城市2</th>
+<th>城市3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+<td>500</td>
+<td>max</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>100</td>
+<td>200</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>然后我们看到第三条数据：[0，2，500]，表示从城市0到城市2的距离500，这时我们比较上一次（0次时）城市src到城市0的距离（0-&gt;0距离为0）+500与次数1直接到城市2的距离，我们能够得到（0+500&gt;200），所以我们赋值如下：</p>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>城市0</th>
+<th>城市1</th>
+<th>城市2</th>
+<th>城市3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+<td>500</td>
+<td>max</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>100</td>
+<td>200</td>
+<td>max</td>
+</tr>
+</tbody></table>
+<p>那么次数1的数据就意味着经过1个中转城市，我们从src出发到各个城市的距离。我们可以知道这个数组大小为(k+1)*(n)维的，所以解这道题可以直接声明这个数组，然后按照上面的逻辑进行求解。</p>
+<p>但是其对于空间消耗很大，通过逻辑我们可以知道，我们求当前的距离之和上一次距离有关，所以我们可以直接声明2*n维的数组就行了。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findCheapestPrice</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] flights, <span class="keyword">int</span> src, <span class="keyword">int</span> dst, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> max=Integer.MAX_VALUE;</span><br><span class="line">    	<span class="keyword">int</span> [][]nums=<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">2</span>][n];</span><br><span class="line">    	Arrays.fill(nums[<span class="number">0</span>], max);</span><br><span class="line">    	</span><br><span class="line"></span><br><span class="line">    	<span class="comment">//记录第一次出发点能够到达中转站</span></span><br><span class="line">    	nums[<span class="number">0</span>][src]=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span>[] temp:flights) &#123;</span><br><span class="line">    		<span class="keyword">if</span>(temp[<span class="number">0</span>]==src) &#123;</span><br><span class="line">    			nums[<span class="number">0</span>][temp[<span class="number">1</span>]]=temp[<span class="number">2</span>];</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">int</span> res=nums[<span class="number">0</span>][dst];</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">    		nums[<span class="number">1</span>][i]=nums[<span class="number">0</span>][i];</span><br><span class="line">    		nums[<span class="number">0</span>][i]=max;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">while</span>(k--&gt;<span class="number">0</span>) &#123;</span><br><span class="line">    		nums[<span class="number">0</span>][src]=<span class="number">0</span>;</span><br><span class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span>[] temp:flights) &#123;</span><br><span class="line">        		<span class="keyword">if</span>(nums[<span class="number">1</span>][temp[<span class="number">0</span>]]!=max) &#123;</span><br><span class="line">        			nums[<span class="number">0</span>][temp[<span class="number">1</span>]]=Math.min(nums[<span class="number">1</span>][temp[<span class="number">0</span>]]+temp[<span class="number">2</span>], nums[<span class="number">0</span>][temp[<span class="number">1</span>]]) ;</span><br><span class="line">        		&#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        	res=Math.min(res, nums[<span class="number">0</span>][dst]);</span><br><span class="line">        	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">        		nums[<span class="number">1</span>][i]=nums[<span class="number">0</span>][i];</span><br><span class="line">        		nums[<span class="number">0</span>][i]=max;</span><br><span class="line">        	&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">return</span> res==max?-<span class="number">1</span>:res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么按照以上方式提交的结果则是：</p>
+<p><img src="/2021/09/07/LeetCode-787-K-%E7%AB%99%E4%B8%AD%E8%BD%AC%E5%86%85%E6%9C%80%E4%BE%BF%E5%AE%9C%E7%9A%84%E8%88%AA%E7%8F%AD/lc787-1.png"></p>
+</li>
+</ul>
+<hr>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cheapest-flights-within-k-stops">https://leetcode-cn.com/problems/cheapest-flights-within-k-stops</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Tan.L</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://tanwork.github.io/2021/09/07/LeetCode-787-K-%E7%AB%99%E4%B8%AD%E8%BD%AC%E5%86%85%E6%9C%80%E4%BE%BF%E5%AE%9C%E7%9A%84%E8%88%AA%E7%8F%AD/">https://tanwork.github.io/2021/09/07/LeetCode-787-K-%E7%AB%99%E4%B8%AD%E8%BD%AC%E5%86%85%E6%9C%80%E4%BE%BF%E5%AE%9C%E7%9A%84%E8%88%AA%E7%8F%AD/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/LeetCode/"># LeetCode</a>
+                    
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
+                    
+                        <a href="/tags/LeetCode-DFS/"># LeetCode-DFS</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/09/07/LeetCode-789-%E9%80%83%E8%84%B1%E9%98%BB%E7%A2%8D%E8%80%85/">LeetCode-789-逃脱阻碍者</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Tan.L | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),     //置于主页面背后
+            o: n(i, "opacity", .5),     //线条透明度
+            c: n(i, "color", "0,0,0"),  //线条颜色
+            n: n(i, "count", 100)    //线条数量
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+
+</body>
+
+</html>
+
