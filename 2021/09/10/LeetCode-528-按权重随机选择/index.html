@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-797-所有可能的路径 | RonaldoIsFine’s</title>
+<title>LeetCode-528-按权重随机选择 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-797-所有可能的路径</h1>
+            <h1 class="post-title">LeetCode-528-按权重随机选择</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 9, 2021&nbsp;&nbsp;12:22:12</a>
+                        Date: <a href="#">September 10, 2021&nbsp;&nbsp;9:34:32</a>
                         </span>
                     
                     
@@ -242,20 +242,21 @@
         </header>
 
         <div class="post-content">
-            <h1 id="797-所有可能的路径"><a href="#797-所有可能的路径" class="headerlink" title="797. 所有可能的路径"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/all-paths-from-source-to-target/">797. 所有可能的路径</a></h1><ul>
+            <h1 id="528-按权重随机选择"><a href="#528-按权重随机选择" class="headerlink" title="528. 按权重随机选择"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/random-pick-with-weight/">528. 按权重随机选择</a></h1><ul>
 <li><p><strong>题目</strong></p>
-<p>给你一个有 n 个节点的 有向无环图（DAG），请你找出所有从节点 0 到节点 n-1 的路径并输出（不要求按特定顺序）</p>
-<p>二维数组的第 i 个数组中的单元都表示有向图中 i 号节点所能到达的下一些节点，空就是没有下一个结点了。</p>
-<p>译者注：有向图是有方向的，即规定了 a→b 你就不能从 b→a 。</p>
+<p>给定一个正整数数组 w ，其中 w[i] 代表下标 i 的权重（下标从 0 开始），请写一个函数 pickIndex ，它可以随机地获取下标 i，选取下标 i 的概率与 w[i] 成正比。</p>
+<p>例如，对于 w = [1, 3]，挑选下标 0 的概率为 1 / (1 + 3) = 0.25 （即，25%），而选取下标 1 的概率为 3 / (1 + 3) = 0.75（即，75%）。</p>
+<p>也就是说，选取下标 i 的概率为 w[i] / sum(w) 。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>输入：graph = [[1,2],[3],[3],[]]<br>输出：[[0,1,3],[0,2,3]]<br>解释：有两条路径 0 -&gt; 1 -&gt; 3 和 0 -&gt; 2 -&gt; 3</p>
+<p>输入：<br>[“Solution”,”pickIndex”]<br>[[[1]],[]]<br>输出：<br>[null,0]<br>解释：<br>Solution solution = new Solution([1]);<br>solution.pickIndex(); // 返回 0，因为数组中只有一个元素，所以唯一的选择是返回下标 0。</p>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<p>输入：graph = [[4,3,1],[3,2,4],[3],[4],[]]<br>输出：[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]</p>
+<p>输入：<br>[“Solution”,”pickIndex”,”pickIndex”,”pickIndex”,”pickIndex”,”pickIndex”]<br>[[[1,3]],[],[],[],[],[]]<br>输出：<br>[null,1,1,1,1,0]<br>解释：<br>Solution solution = new Solution([1, 3]);<br>solution.pickIndex(); // 返回 1，返回下标 1，返回该下标概率为 3/4 。<br>solution.pickIndex(); // 返回 1<br>solution.pickIndex(); // 返回 1<br>solution.pickIndex(); // 返回 1<br>solution.pickIndex(); // 返回 0，返回下标 0，返回该下标概率为 1/4 。</p>
+<p>由于这是一个随机问题，允许多个答案，因此下列输出都可以被认为是正确的:<br>[null,1,1,1,1,0]<br>[null,1,1,1,1,1]<br>[null,1,1,1,0,0]<br>[null,1,1,1,0,1]<br>[null,1,0,1,0,0]<br>……<br>诸若此类。</p>
 </blockquote>
 <ul>
 <li><p>难度：中等</p>
@@ -263,17 +264,13 @@
 <li><p>分类：多做</p>
 </li>
 <li><p>题解</p>
-<p>本题是可用深度优先搜索完成，主要用到的数据结构为Deque，它用于存储路径，同时将走过的路径弹出。</p>
+<p>这题又是典型的前项和+二分法的结构。用前项和数组相邻数值的差值作为权重，生成随机数。再将随机数在前项和数组中搜索找到下标值返回即可。</p>
 </li>
 <li><p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">   List&lt;List&lt;Integer&gt;&gt;res =<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; allPathsSourceTarget(<span class="keyword">int</span>[][] graph) &#123;</span><br><span class="line">   	res=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">   	Deque&lt;Integer&gt; deque=<span class="keyword">new</span> ArrayDeque&lt;Integer&gt;();</span><br><span class="line">   	dfs(<span class="number">0</span>, graph.length-<span class="number">1</span>, deque, graph);</span><br><span class="line">   	</span><br><span class="line">   	<span class="keyword">return</span> res;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> src,<span class="keyword">int</span> dst,Deque&lt;Integer&gt;deque,<span class="keyword">int</span> [][]graph)</span> </span>&#123;</span><br><span class="line">	deque.add(src);</span><br><span class="line">   	<span class="keyword">if</span>(src==dst) &#123;</span><br><span class="line">		res.add(<span class="keyword">new</span> ArrayList&lt;&gt;(deque));</span><br><span class="line">		deque.removeLast();</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">   	</span><br><span class="line">   	<span class="keyword">for</span>(<span class="keyword">int</span> a:graph[src]) &#123;</span><br><span class="line">   		dfs(a, dst, deque, graph);</span><br><span class="line">   	&#125;</span><br><span class="line">   	deque.removeLast();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2021/09/09/LeetCode-797-%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E8%B7%AF%E5%BE%84/lc797-1.png"></p>
-</li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> []nums;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Solution</span><span class="params">(<span class="keyword">int</span>[] w)</span> </span>&#123;</span><br><span class="line">        nums=<span class="keyword">new</span> <span class="keyword">int</span> [w.length];</span><br><span class="line">        sum=w[<span class="number">0</span>];</span><br><span class="line">        nums[<span class="number">0</span>]=w[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;w.length;i++)&#123;</span><br><span class="line">            sum+=w[i];</span><br><span class="line">            nums[i]=nums[i-<span class="number">1</span>]+w[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pickIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num=(<span class="keyword">int</span>)(Math.random()*sum)+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> binarySearch(nums,num);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> []nums,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>,right=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=(right-left)/<span class="number">2</span>+left;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                right=mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/all-paths-from-source-to-target">https://leetcode-cn.com/problems/all-paths-from-source-to-target</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/random-pick-with-weight">https://leetcode-cn.com/problems/random-pick-with-weight</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -288,7 +285,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/09/LeetCode-797-%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E8%B7%AF%E5%BE%84/">https://tanwork.github.io/2021/09/09/LeetCode-797-%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E8%B7%AF%E5%BE%84/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/10/LeetCode-528-%E6%8C%89%E6%9D%83%E9%87%8D%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9/">https://tanwork.github.io/2021/09/10/LeetCode-528-%E6%8C%89%E6%9D%83%E9%87%8D%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9/</a></span>
                     </p>
                 
                 
@@ -308,7 +305,9 @@
                     
                         <a href="/tags/LeetCode-%E5%A4%9A%E5%81%9A/"># LeetCode-多做</a>
                     
-                        <a href="/tags/LeetCode-DFS/"># LeetCode-DFS</a>
+                        <a href="/tags/LeetCode-%E4%BA%8C%E5%88%86%E6%B3%95/"># LeetCode-二分法</a>
+                    
+                        <a href="/tags/LeetCode-%E5%89%8D%E9%A1%B9%E5%92%8C/"># LeetCode-前项和</a>
                     
                         
                 </span>
@@ -321,10 +320,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/10/LeetCode-1894-%E6%89%BE%E5%88%B0%E9%9C%80%E8%A6%81%E8%A1%A5%E5%85%85%E7%B2%89%E7%AC%94%E7%9A%84%E5%AD%A6%E7%94%9F%E7%BC%96%E5%8F%B7/">LeetCode-1894-找到需要补充粉笔的学生编号</a>
             
-            
-            <a class="next" rel="next" href="/2021/09/09/LeetCode-68-%E6%96%87%E6%9C%AC%E5%B7%A6%E5%8F%B3%E5%AF%B9%E9%BD%90/">LeetCode-68-文本左右对齐</a>
+            <a class="next" rel="next" href="/2021/09/10/LeetCode-1894-%E6%89%BE%E5%88%B0%E9%9C%80%E8%A6%81%E8%A1%A5%E5%85%85%E7%B2%89%E7%AC%94%E7%9A%84%E5%AD%A6%E7%94%9F%E7%BC%96%E5%8F%B7/">LeetCode-1894-找到需要补充粉笔的学生编号</a>
             
         </section>
 
