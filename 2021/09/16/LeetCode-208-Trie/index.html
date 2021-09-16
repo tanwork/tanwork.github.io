@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <meta name="author" content="Tan.L">
+
+
+
+
+
+<title>LeetCode-208-Trie | RonaldoIsFine’s</title>
+
+
+
+    <link rel="icon" href="/image/top.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">RonaldoIsFine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">RonaldoIsFine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">LeetCode-208-Trie</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Tan.L</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 16, 2021&nbsp;&nbsp;21:27:34</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/LeetCode/">LeetCode</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h4 id="208-实现-Trie-前缀树"><a href="#208-实现-Trie-前缀树" class="headerlink" title="208. 实现 Trie (前缀树)"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/">208. 实现 Trie (前缀树)</a></h4><ul>
+<li><p><strong>题目</strong></p>
+<p>Trie（发音类似 “try”）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。</p>
+<p>请你实现 Trie 类：</p>
+<ul>
+<li>Trie() 初始化前缀树对象。</li>
+<li>void insert(String word) 向前缀树中插入字符串 word 。</li>
+<li>boolean search(String word) 如果字符串 word 在前缀树中，返回 true（即，在检索之前已经插入）；否则，返回 false 。</li>
+<li>boolean startsWith(String prefix) 如果之前已经插入的字符串 word 的前缀之一为 prefix ，返回 true ；否则，返回 false 。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入<br>[“Trie”, “insert”, “search”, “search”, “startsWith”, “insert”, “search”]<br>[[], [“apple”], [“apple”], [“app”], [“app”], [“app”], [“app”]]<br>输出<br>[null, null, true, false, true, null, true]</p>
+<p>解释<br>Trie trie = new Trie();<br>trie.insert(“apple”);<br>trie.search(“apple”);   // 返回 True<br>trie.search(“app”);     // 返回 False<br>trie.startsWith(“app”); // 返回 True<br>trie.insert(“app”);<br>trie.search(“app”);     // 返回 True</p>
+</blockquote>
+<ul>
+<li><p>难度：中等</p>
+</li>
+<li><p>分类：多看</p>
+</li>
+<li><p>题解</p>
+<p>这题是前缀树的实现，做这题能够帮我们更好的理解前缀树的概念，下面是我根据前缀树的概念完成代码，但并不是最佳代码，但是确实能够加深自己的理解。</p>
+<p>这里对于前缀树我包含的元素包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">boolean isEnd;  是否是结尾</span><br><span class="line">HashMap&lt;Character, Trie&gt; dricHashMap; 储存字符</span><br><span class="line">   Character value; 当前的值</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当然发现这样的代码其实非常冗余，因为我们不需要知道当前的值（在题目条件中），因为我们在hashmap中就辨别了。那么最终导致的结果也是很差的。</p>
+</li>
+<li><p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">![lc208-<span class="number">1</span>](F:\code\Blog\version2\myBlog\source\_posts\LeetCode-<span class="number">208</span>-Trie\lc208-<span class="number">1.</span>png)![lc208-<span class="number">1</span>](F:\code\Blog\version2\myBlog\source\_posts\LeetCode-<span class="number">208</span>-Trie\lc208-<span class="number">1.</span>png)<span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">	<span class="keyword">boolean</span> isEnd;</span><br><span class="line">	HashMap&lt;Character, Trie&gt; dricHashMap;</span><br><span class="line">    Character value;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	isEnd=<span class="keyword">false</span>;</span><br><span class="line">    	dricHashMap=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Inserts a word into the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    	</span><br><span class="line">    	Trie tempTrie = <span class="keyword">null</span>;</span><br><span class="line">    	HashMap&lt;Character, Trie&gt; hashMap=dricHashMap;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">char</span> a:word.toCharArray()) &#123;</span><br><span class="line">    		<span class="keyword">if</span>(hashMap.containsKey(a)) &#123;</span><br><span class="line">    			tempTrie=hashMap.get(a);</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">else</span> &#123;</span><br><span class="line">    			hashMap.put(a, <span class="keyword">new</span> Trie());</span><br><span class="line">    			tempTrie=hashMap.get(a);</span><br><span class="line">    		&#125;</span><br><span class="line">    		tempTrie.value=a;</span><br><span class="line">    		hashMap=tempTrie.dricHashMap;</span><br><span class="line">    	&#125;</span><br><span class="line">    	tempTrie.isEnd=<span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if the word is in the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    	Trie tempTrie=<span class="keyword">null</span>;</span><br><span class="line">    	HashMap&lt;Character, Trie&gt; teMap=dricHashMap;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">char</span> a:word.toCharArray()) &#123;</span><br><span class="line">    		<span class="keyword">if</span>(!teMap.containsKey(a)) &#123;</span><br><span class="line">    			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">else</span> &#123;</span><br><span class="line">				tempTrie=teMap.get(a);</span><br><span class="line">			&#125;</span><br><span class="line">    		teMap=tempTrie.dricHashMap;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">if</span>(tempTrie!=<span class="keyword">null</span>&amp;&amp;tempTrie.isEnd) &#123;</span><br><span class="line">    		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">    	HashMap&lt;Character, Trie&gt; teMap=dricHashMap;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">char</span> a:prefix.toCharArray()) &#123;</span><br><span class="line">    		<span class="keyword">if</span>(!teMap.containsKey(a)) &#123;</span><br><span class="line">    			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">else</span> &#123;</span><br><span class="line">				teMap=teMap.get(a).dricHashMap;</span><br><span class="line">			&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>结果如下：</p>
+<p><img src="/2021/09/16/LeetCode-208-Trie/lc208-1.png"></p>
+<ul>
+<li><p>优化</p>
+<p>以上的方法是自己写的，有很多需要改进的地方，那么以下是改进的算法，去掉了很多冗余部分。</p>
+</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	Trie []dric;</span><br><span class="line">	<span class="keyword">boolean</span> isEnd;</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	dric=<span class="keyword">new</span> Trie [<span class="number">26</span>];</span><br><span class="line">    	isEnd=<span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Inserts a word into the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    	Trie temp=<span class="keyword">this</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">char</span> a:word.toCharArray()) &#123;</span><br><span class="line">    		<span class="keyword">int</span> index=a-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    		<span class="keyword">if</span>(temp.dric[index]==<span class="keyword">null</span>) &#123;</span><br><span class="line">    			temp.dric[index]=<span class="keyword">new</span> Trie();</span><br><span class="line">    		&#125;</span><br><span class="line">    		temp=temp.dric[index];</span><br><span class="line">    	&#125;</span><br><span class="line">    	temp.isEnd=<span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if the word is in the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    	Trie tempTrie=<span class="keyword">this</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">char</span> a:word.toCharArray()) &#123;</span><br><span class="line">    		<span class="keyword">int</span> index=a-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    		<span class="keyword">if</span>(tempTrie.dric[index]==<span class="keyword">null</span>) &#123;</span><br><span class="line">    			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    		tempTrie=tempTrie.dric[index];</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">if</span>(tempTrie.isEnd) &#123;</span><br><span class="line">    		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">    	Trie tempTrie=<span class="keyword">this</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">char</span> a:prefix.toCharArray()) &#123;</span><br><span class="line">    		<span class="keyword">int</span> index=a-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    		<span class="keyword">if</span>(tempTrie.dric[index]==<span class="keyword">null</span>) &#123;</span><br><span class="line">    			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    		tempTrie=tempTrie.dric[index];</span><br><span class="line">    	&#125;</span><br><span class="line"></span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么取得的结果为：</p>
+<p><img src="/2021/09/16/LeetCode-208-Trie/lc208-2.png"></p>
+<hr>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-trie-prefix-tree">https://leetcode-cn.com/problems/implement-trie-prefix-tree</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Tan.L</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://tanwork.github.io/2021/09/16/LeetCode-208-Trie/">https://tanwork.github.io/2021/09/16/LeetCode-208-Trie/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/LeetCode/"># LeetCode</a>
+                    
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
+                    
+                        <a href="/tags/LeetCode-%E5%89%8D%E7%BC%80%E6%A0%91/"># LeetCode-前缀树</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/09/12/LeetCode-678-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%E5%AD%97%E7%AC%A6%E4%B8%B2/">LeetCode-678-有效的括号字符串</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Tan.L | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),     //置于主页面背后
+            o: n(i, "opacity", .5),     //线条透明度
+            c: n(i, "color", "0,0,0"),  //线条颜色
+            n: n(i, "count", 100)    //线条数量
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+
+</body>
+
+</html>
+

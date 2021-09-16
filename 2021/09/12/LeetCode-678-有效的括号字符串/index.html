@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-528-按权重随机选择 | RonaldoIsFine’s</title>
+<title>LeetCode-678-有效的括号字符串 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-528-按权重随机选择</h1>
+            <h1 class="post-title">LeetCode-678-有效的括号字符串</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 10, 2021&nbsp;&nbsp;9:34:32</a>
+                        Date: <a href="#">September 12, 2021&nbsp;&nbsp;11:39:56</a>
                         </span>
                     
                     
@@ -242,35 +242,34 @@
         </header>
 
         <div class="post-content">
-            <h1 id="528-按权重随机选择"><a href="#528-按权重随机选择" class="headerlink" title="528. 按权重随机选择"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/random-pick-with-weight/">528. 按权重随机选择</a></h1><ul>
+            <h4 id="678-有效的括号字符串"><a href="#678-有效的括号字符串" class="headerlink" title="678. 有效的括号字符串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/valid-parenthesis-string/">678. 有效的括号字符串</a></h4><ul>
 <li><p><strong>题目</strong></p>
-<p>给定一个正整数数组 w ，其中 w[i] 代表下标 i 的权重（下标从 0 开始），请写一个函数 pickIndex ，它可以随机地获取下标 i，选取下标 i 的概率与 w[i] 成正比。</p>
-<p>例如，对于 w = [1, 3]，挑选下标 0 的概率为 1 / (1 + 3) = 0.25 （即，25%），而选取下标 1 的概率为 3 / (1 + 3) = 0.75（即，75%）。</p>
-<p>也就是说，选取下标 i 的概率为 w[i] / sum(w) 。</p>
+<p>给定一个只包含三种字符的字符串：（ ，） 和 *，写一个函数来检验这个字符串是否为有效字符串。有效字符串具有如下规则：</p>
+<p>1.任何左括号 ( 必须有相应的右括号 )。<br>2.任何右括号 ) 必须有相应的左括号 ( 。<br>3.左括号 ( 必须在对应的右括号之前 )。</p>
+<p>4.可以被视为单个右括号 ) ，或单个左括号 ( ，或一个空字符串。<br>5.一个空字符串也被视为有效字符串。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>输入：<br>[“Solution”,”pickIndex”]<br>[[[1]],[]]<br>输出：<br>[null,0]<br>解释：<br>Solution solution = new Solution([1]);<br>solution.pickIndex(); // 返回 0，因为数组中只有一个元素，所以唯一的选择是返回下标 0。</p>
+<p>输入: “()”<br>输出: True</p>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<p>输入：<br>[“Solution”,”pickIndex”,”pickIndex”,”pickIndex”,”pickIndex”,”pickIndex”]<br>[[[1,3]],[],[],[],[],[]]<br>输出：<br>[null,1,1,1,1,0]<br>解释：<br>Solution solution = new Solution([1, 3]);<br>solution.pickIndex(); // 返回 1，返回下标 1，返回该下标概率为 3/4 。<br>solution.pickIndex(); // 返回 1<br>solution.pickIndex(); // 返回 1<br>solution.pickIndex(); // 返回 1<br>solution.pickIndex(); // 返回 0，返回下标 0，返回该下标概率为 1/4 。</p>
-<p>由于这是一个随机问题，允许多个答案，因此下列输出都可以被认为是正确的:<br>[null,1,1,1,1,0]<br>[null,1,1,1,1,1]<br>[null,1,1,1,0,0]<br>[null,1,1,1,0,1]<br>[null,1,0,1,0,0]<br>……<br>诸若此类。</p>
+<p>输入: “(*)”<br>输出: True</p>
 </blockquote>
 <ul>
 <li><p>难度：中等</p>
 </li>
-<li><p>分类：多做</p>
+<li><p>分类：多看</p>
 </li>
 <li><p>题解</p>
-<p>这题又是典型的前项和+二分法的结构。用前项和数组相邻数值的差值作为权重，生成随机数。再将随机数在前项和数组中搜索找到下标值返回即可。</p>
+<p>本题用到了栈。具体的解法直接上代码。</p>
 </li>
 <li><p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> []nums;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Solution</span><span class="params">(<span class="keyword">int</span>[] w)</span> </span>&#123;</span><br><span class="line">        nums=<span class="keyword">new</span> <span class="keyword">int</span> [w.length];</span><br><span class="line">        sum=w[<span class="number">0</span>];</span><br><span class="line">        nums[<span class="number">0</span>]=w[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;w.length;i++)&#123;</span><br><span class="line">            sum+=w[i];</span><br><span class="line">            nums[i]=nums[i-<span class="number">1</span>]+w[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pickIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num=(<span class="keyword">int</span>)(Math.random()*sum)+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> binarySearch(nums,num);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> []nums,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>,right=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=(right-left)/<span class="number">2</span>+left;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                right=mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkValidString</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    	Stack&lt;Integer&gt; stack=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    	Stack&lt;Integer&gt; stack2=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++) &#123;</span><br><span class="line">    		<span class="keyword">char</span> a=s.charAt(i);</span><br><span class="line">    		<span class="keyword">if</span>(a==<span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">    			stack.push(i);</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">else</span> <span class="keyword">if</span>(a==<span class="string">&#x27;*&#x27;</span>) &#123;</span><br><span class="line">    			stack2.push(i);</span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span>(!stack.isEmpty()) &#123;</span><br><span class="line">					stack.pop();</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(!stack2.isEmpty()) &#123;</span><br><span class="line">					stack2.pop();</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">while</span>(!stack.isEmpty()&amp;&amp;!stack2.isEmpty()) &#123;</span><br><span class="line">    		<span class="keyword">int</span> index=stack.pop();</span><br><span class="line">    		<span class="keyword">int</span> index2=stack2.pop();</span><br><span class="line">    		<span class="keyword">if</span>(index2&lt;index) &#123;</span><br><span class="line">    			<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">return</span> stack.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/random-pick-with-weight">https://leetcode-cn.com/problems/random-pick-with-weight</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/valid-parenthesis-string">https://leetcode-cn.com/problems/valid-parenthesis-string</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -285,7 +284,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/10/LeetCode-528-%E6%8C%89%E6%9D%83%E9%87%8D%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9/">https://tanwork.github.io/2021/09/10/LeetCode-528-%E6%8C%89%E6%9D%83%E9%87%8D%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/12/LeetCode-678-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%E5%AD%97%E7%AC%A6%E4%B8%B2/">https://tanwork.github.io/2021/09/12/LeetCode-678-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%E5%AD%97%E7%AC%A6%E4%B8%B2/</a></span>
                     </p>
                 
                 
@@ -303,11 +302,9 @@
                     
                         <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
                     
-                        <a href="/tags/LeetCode-%E5%A4%9A%E5%81%9A/"># LeetCode-多做</a>
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
                     
-                        <a href="/tags/LeetCode-%E4%BA%8C%E5%88%86%E6%B3%95/"># LeetCode-二分法</a>
-                    
-                        <a href="/tags/LeetCode-%E5%89%8D%E9%A1%B9%E5%92%8C/"># LeetCode-前项和</a>
+                        <a href="/tags/LeetCode-%E6%A0%88/"># LeetCode-栈</a>
                     
                         
                 </span>
@@ -320,10 +317,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/12/LeetCode-678-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%E5%AD%97%E7%AC%A6%E4%B8%B2/">LeetCode-678-有效的括号字符串</a>
+                <a class="prev" rel="prev" href="/2021/09/16/LeetCode-208-Trie/">LeetCode-208-Trie</a>
             
             
-            <a class="next" rel="next" href="/2021/09/10/LeetCode-1894-%E6%89%BE%E5%88%B0%E9%9C%80%E8%A6%81%E8%A1%A5%E5%85%85%E7%B2%89%E7%AC%94%E7%9A%84%E5%AD%A6%E7%94%9F%E7%BC%96%E5%8F%B7/">LeetCode-1894-找到需要补充粉笔的学生编号</a>
+            <a class="next" rel="next" href="/2021/09/10/LeetCode-528-%E6%8C%89%E6%9D%83%E9%87%8D%E9%9A%8F%E6%9C%BA%E9%80%89%E6%8B%A9/">LeetCode-528-按权重随机选择</a>
             
         </section>
 
