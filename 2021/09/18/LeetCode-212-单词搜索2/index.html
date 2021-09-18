@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-36-有效的数独 | RonaldoIsFine’s</title>
+<title>LeetCode-212-单词搜索2 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-36-有效的数独</h1>
+            <h1 class="post-title">LeetCode-212-单词搜索2</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 17, 2021&nbsp;&nbsp;9:52:48</a>
+                        Date: <a href="#">September 18, 2021&nbsp;&nbsp;11:28:36</a>
                         </span>
                     
                     
@@ -242,41 +242,50 @@
         </header>
 
         <div class="post-content">
-            <h4 id="36-有效的数独"><a href="#36-有效的数独" class="headerlink" title="36. 有效的数独"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/valid-sudoku/">36. 有效的数独</a></h4><ul>
+            <h4 id="212-单词搜索-II"><a href="#212-单词搜索-II" class="headerlink" title="212. 单词搜索 II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/word-search-ii/">212. 单词搜索 II</a></h4><ul>
 <li><p><strong>题目</strong></p>
-<p>请你判断一个 9x9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。</p>
-<p>数字 1-9 在每一行只能出现一次。<br>数字 1-9 在每一列只能出现一次。<br>数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。（请参考示例图）<br>数独部分空格内已填入了数字，空白格用 ‘.’ 表示。</p>
-<p>注意：</p>
-<p>一个有效的数独（部分已被填充）不一定是可解的。<br>只需要根据以上规则，验证已经填入的数字是否有效即可。</p>
+<p>给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words，找出所有同时在二维网格和字典中出现的单词。</p>
+<p>单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母在一个单词中不允许被重复使用。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>输入：board =<br>[[“5”,”3”,”.”,”.”,”7”,”.”,”.”,”.”,”.”]<br>,[“6”,”.”,”.”,”1”,”9”,”5”,”.”,”.”,”.”]<br>,[“.”,”9”,”8”,”.”,”.”,”.”,”.”,”6”,”.”]<br>,[“8”,”.”,”.”,”.”,”6”,”.”,”.”,”.”,”3”]<br>,[“4”,”.”,”.”,”8”,”.”,”3”,”.”,”.”,”1”]<br>,[“7”,”.”,”.”,”.”,”2”,”.”,”.”,”.”,”6”]<br>,[“.”,”6”,”.”,”.”,”.”,”.”,”2”,”8”,”.”]<br>,[“.”,”.”,”.”,”4”,”1”,”9”,”.”,”.”,”5”]<br>,[“.”,”.”,”.”,”.”,”8”,”.”,”.”,”7”,”9”]]<br>输出：true</p>
+<p>输入：board = [[“o”,”a”,”a”,”n”],[“e”,”t”,”a”,”e”],[“i”,”h”,”k”,”r”],[“i”,”f”,”l”,”v”]], words = [“oath”,”pea”,”eat”,”rain”]<br>输出：[“eat”,”oath”]</p>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<p>输入：board =<br>[[“8”,”3”,”.”,”.”,”7”,”.”,”.”,”.”,”.”]<br>,[“6”,”.”,”.”,”1”,”9”,”5”,”.”,”.”,”.”]<br>,[“.”,”9”,”8”,”.”,”.”,”.”,”.”,”6”,”.”]<br>,[“8”,”.”,”.”,”.”,”6”,”.”,”.”,”.”,”3”]<br>,[“4”,”.”,”.”,”8”,”.”,”3”,”.”,”.”,”1”]<br>,[“7”,”.”,”.”,”.”,”2”,”.”,”.”,”.”,”6”]<br>,[“.”,”6”,”.”,”.”,”.”,”.”,”2”,”8”,”.”]<br>,[“.”,”.”,”.”,”4”,”1”,”9”,”.”,”.”,”5”]<br>,[“.”,”.”,”.”,”.”,”8”,”.”,”.”,”7”,”9”]]<br>输出：false<br>解释：除了第一行的第一个数字从 5 改为 8 以外，空格内其他数字均与 示例1 相同。 但由于位于左上角的 3x3 宫内有两个 8 存在, 因此这个数独是无效的。</p>
+<p>输入：board = [[“a”,”b”],[“c”,”d”]], words = [“abcb”]<br>输出：[]</p>
 </blockquote>
 <ul>
-<li><p>难度：中等</p>
+<li><p>难度：困难</p>
 </li>
-<li><p>分类：多看</p>
+<li><p>分类：多做</p>
 </li>
 <li><p>题解</p>
-<p>这道题是非常典型的操作数组的题目。对于行、列和3*3的矩阵，我们都分别对他们分配数组空间。在<strong>eclipse当中，数组的初值是0</strong>。对于对于统计每行、每列的字符出现的次数，这里就不再累述，这里我们详细讲讲对于3 * 3矩阵我们的操作。</p>
-<p>首先矩阵是三位的，第一维度是第几个矩阵，第二维度是行，第三维度是列。首先我们判断是第几个矩阵用到了公式：<br>$$<br>index_1=(hang/3)*3+(lie/3)<br>$$<br>这里我们知道在编程中这个“/”符号他是向下取余的作用。</p>
-<p>对于第二维度，首先我们需要获得，当前遍历的这个数组的值是多少，有如下公式：<br>$$<br>index=board[i][j]-‘0’-1<br>$$<br>然后我们计算它所对应的行列就有：<br>$$<br>index_2=index/3 \<br>index_3=index%3<br>$$</p>
+<p>这道题是字典树和dfs(深度优先搜索)相结合的题。前缀树能够快速判断字符串是否插入过，所以这题对于字符串的判断自然而然就想到了前缀树。</p>
+<p>具体思路为：</p>
+<ul>
+<li>将所有word插入前缀树中</li>
+<li>对board数组中每个字符进行遍历判断是否在前缀树中，该字符作为起点</li>
+<li>对以上面字符为起点开始相对于它上下左右进行判断，组成的字符串是否在字符中，依次递归。</li>
+</ul>
+<p>那么还需要注意的点是</p>
+<ul>
+<li>注意board数组的边界，尤其是在dfs中</li>
+<li>对于Trie中不用boolean isEnd来判断是否是一个字符串的结尾，而是在结尾直接用string word保存字符串，这样能够判断是不是结尾，并且可以直接将该字符串插入到结果中。</li>
+<li>用hashset来储存结果，为了防止结果重复。</li>
+<li><strong>dfs尤其需要注意需要对遍历过的做标记，这里为了防止重复遍历，所以将board数组对于的元素进行替换，来防止重复。</strong></li>
+</ul>
 </li>
 <li><p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidSudoku</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</span><br><span class="line"> 	<span class="keyword">int</span> [][]row =<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">9</span>][<span class="number">9</span>];</span><br><span class="line"> 	<span class="keyword">int</span> [][]col=<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">9</span>][<span class="number">9</span>];</span><br><span class="line"> 	<span class="keyword">int</span> [][][]tmt=<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">9</span>][<span class="number">3</span>][<span class="number">3</span>];</span><br><span class="line"> 	</span><br><span class="line"> 	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;board.length;i++) &#123;</span><br><span class="line"> 		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;board[<span class="number">0</span>].length;j++) &#123;</span><br><span class="line"> 			<span class="keyword">int</span> index=board[i][j]-<span class="string">&#x27;0&#x27;</span>-<span class="number">1</span>;</span><br><span class="line"> 			</span><br><span class="line"> 			<span class="keyword">if</span>(index&gt;-<span class="number">1</span>)</span><br><span class="line"> 			&#123;</span><br><span class="line">     			<span class="keyword">if</span>(row[i][index]==<span class="number">0</span>) &#123;</span><br><span class="line">     				row[i][index]=<span class="number">1</span>;</span><br><span class="line">     			&#125;</span><br><span class="line">     			<span class="keyword">else</span> &#123;</span><br><span class="line"> 					<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"> 				&#125;</span><br><span class="line">     			<span class="keyword">if</span>(col[j][index]==<span class="number">0</span>) &#123;</span><br><span class="line">     				col[j][index]=<span class="number">1</span>;</span><br><span class="line">     			&#125;</span><br><span class="line">     			<span class="keyword">else</span> &#123;</span><br><span class="line"> 					<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"> 				&#125;</span><br><span class="line">     			<span class="keyword">if</span>(tmt[(i/<span class="number">3</span>)*<span class="number">3</span>+(j/<span class="number">3</span>)][index/<span class="number">3</span>][index%<span class="number">3</span>]==<span class="number">0</span>) &#123;</span><br><span class="line">     				tmt[(i/<span class="number">3</span>)*<span class="number">3</span>+(j/<span class="number">3</span>)][index/<span class="number">3</span>][index%<span class="number">3</span>]=<span class="number">1</span>;</span><br><span class="line">     			&#125;</span><br><span class="line">     			<span class="keyword">else</span> &#123;</span><br><span class="line"> 					<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"> 				&#125;</span><br><span class="line"> 			&#125;</span><br><span class="line">  </span><br><span class="line"> 		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	<span class="keyword">return</span> <span class="keyword">true</span>;	</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> [][]dirs= &#123;&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">findWords</span><span class="params">(<span class="keyword">char</span>[][] board, String[] words)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//用集合储存，防止出现重复</span></span><br><span class="line">	HashSet&lt;String&gt; res=<span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	Trie trie=<span class="keyword">new</span> Trie();</span><br><span class="line">	<span class="comment">//将所有单词加入到前缀树中</span></span><br><span class="line">	<span class="keyword">for</span>(String temp:words) &#123;</span><br><span class="line">		trie.insert(temp);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//进行数组遍历</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;board.length;i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;board[<span class="number">0</span>].length;j++) &#123;</span><br><span class="line">			dfs(board,i,j,trie,res);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(res);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">char</span>[][]board,<span class="keyword">int</span> i,<span class="keyword">int</span> j,Trie node, HashSet&lt;String&gt; res)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//检查是否包含当前字符</span></span><br><span class="line">	<span class="keyword">if</span>(node.hashMap.get(board[i][j])==<span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">char</span> ch=board[i][j];</span><br><span class="line">	node=node.hashMap.get(ch);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//判断是否完成一个字符</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(!<span class="string">&quot;&quot;</span>.equals(node.word)) &#123;</span><br><span class="line">		<span class="comment">//这里就知道为什么用word来记录是否到了单词结束，而不是直接用 boolean isEnd</span></span><br><span class="line">		res.add(node.word);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//放置重复递归到这个位置</span></span><br><span class="line">	board[i][j]=<span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> []dir:dirs) &#123;</span><br><span class="line">		<span class="keyword">int</span> i2=i+dir[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">int</span> j2=j+dir[<span class="number">1</span>];</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(i2&gt;-<span class="number">1</span>&amp;&amp;i2&lt;board.length&amp;&amp;j2&gt;-<span class="number">1</span>&amp;&amp;j2&lt;board[<span class="number">0</span>].length) &#123;</span><br><span class="line">			dfs(board,i2,j2,node,res);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//记得将他恢复原状</span></span><br><span class="line">	board[i][j]=ch;    	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2021/09/17/LeetCode-36-%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/lc36-1.png"></p>
+<p><img src="/2021/09/18/LeetCode-212-%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A22/lc212-1.png"></p>
 </li>
 </ul>
 <hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/valid-sudoku">https://leetcode-cn.com/problems/valid-sudoku</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/word-search-ii">https://leetcode-cn.com/problems/word-search-ii</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -291,7 +300,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/17/LeetCode-36-%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/">https://tanwork.github.io/2021/09/17/LeetCode-36-%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/18/LeetCode-212-%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A22/">https://tanwork.github.io/2021/09/18/LeetCode-212-%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A22/</a></span>
                     </p>
                 
                 
@@ -307,11 +316,13 @@
                     
                         <a href="/tags/LeetCode/"># LeetCode</a>
                     
-                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                        <a href="/tags/LeetCode-%E5%89%8D%E7%BC%80%E6%A0%91/"># LeetCode-前缀树</a>
                     
-                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
+                        <a href="/tags/LeetCode-%E5%9B%B0%E9%9A%BE/"># LeetCode-困难</a>
                     
-                        <a href="/tags/LeetCode-%E6%95%B0%E7%BB%84/"># LeetCode-数组</a>
+                        <a href="/tags/LeetCode-%E5%A4%9A%E5%81%9A/"># LeetCode-多做</a>
+                    
+                        <a href="/tags/LeetCode-dfs/"># LeetCode-dfs</a>
                     
                         
                 </span>
@@ -324,10 +335,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/18/LeetCode-212-%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A22/">LeetCode-212-单词搜索2</a>
             
-            
-            <a class="next" rel="next" href="/2021/09/16/LeetCode-208-Trie/">LeetCode-208-Trie</a>
+            <a class="next" rel="next" href="/2021/09/17/LeetCode-36-%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/">LeetCode-36-有效的数独</a>
             
         </section>
 
