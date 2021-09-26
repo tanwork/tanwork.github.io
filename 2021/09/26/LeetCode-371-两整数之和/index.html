@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-剑指offer10-1-斐波那契数列 | RonaldoIsFine’s</title>
+<title>LeetCode-371-两整数之和 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-剑指offer10-1-斐波那契数列</h1>
+            <h1 class="post-title">LeetCode-371-两整数之和</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 4, 2021&nbsp;&nbsp;9:27:17</a>
+                        Date: <a href="#">September 26, 2021&nbsp;&nbsp;10:51:06</a>
                         </span>
                     
                     
@@ -242,52 +242,97 @@
         </header>
 
         <div class="post-content">
-            <h1 id="剑指-Offer-10-I-斐波那契数列"><a href="#剑指-Offer-10-I-斐波那契数列" class="headerlink" title="剑指 Offer 10- I. 斐波那契数列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/">剑指 Offer 10- I. 斐波那契数列</a></h1><ul>
+            <h4 id="371-两整数之和"><a href="#371-两整数之和" class="headerlink" title="371. 两整数之和"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sum-of-two-integers/">371. 两整数之和</a></h4><ul>
 <li><p><strong>题目</strong></p>
-<p>写一个函数，输入 <code>n</code> ，求斐波那契（Fibonacci）数列的第 <code>n</code> 项（即 <code>F(N)</code>）。斐波那契数列的定义如下：</p>
-<blockquote>
-<p>F(0) = 0,   F(1) = 1<br>F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</p>
-</blockquote>
-<p>斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。</p>
-<p>答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。</p>
+<p>给你两个整数 <code>a</code> 和 <code>b</code> ，<strong>不使用</strong> 运算符 <code>+</code> 和 <code>-</code> ，计算并返回两整数之和。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：n = 2</span><br><span class="line">&gt;输出：1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：a = 1, b = 2</span><br><span class="line">&gt;输出：3</span><br></pre></td></tr></table></figure>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：n = 5</span><br><span class="line">&gt;输出：5</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：a = 2, b = 3</span><br><span class="line">&gt;输出：5</span><br></pre></td></tr></table></figure>
 </blockquote>
 <ul>
-<li><p>难度：简单</p>
+<li><p>难度：中等</p>
 </li>
-<li><p>分类：了解</p>
+<li><p>分类：多看</p>
 </li>
 <li><p>题解</p>
-<p>这道题是很经典的递归题，也是大家入门递归会经常看见的一道题，那么这道题我们就用动态规划做。动态规划对空间复杂度消耗高，但是其运算速度是非常快的，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&lt;<span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> n;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> []nums=<span class="keyword">new</span> <span class="keyword">int</span> [n+<span class="number">1</span>];</span><br><span class="line">	nums[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">	nums[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;n+<span class="number">1</span>;i++) &#123;</span><br><span class="line">		nums[i]=(nums[i-<span class="number">1</span>]+nums[i-<span class="number">2</span>])%<span class="number">1000000007</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> nums[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/lcoffer10-1-1.PNG"></p>
+<p>关于这题有些人的方法为:<br>$$<br>sum=a+b<br>$$<br>该方法也能通过编译，但是不符合题目要求，这题本质还是落在的位运算上。</p>
+<p>首先我们先明确几个概念：</p>
+<table>
+<thead>
+<tr>
+<th>编译器位数</th>
+<th>char</th>
+<th>short int</th>
+<th>int</th>
+<th>long</th>
+<th>long long</th>
+<th>float</th>
+<th>double</th>
+<th>char *</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32位(4byte)</td>
+<td>8(1)</td>
+<td>16(2)</td>
+<td>32(4)</td>
+<td>32(4)</td>
+<td>64(8)</td>
+<td>32(4)</td>
+<td>64(8)</td>
+<td>16(2)</td>
+</tr>
+<tr>
+<td>64位(8byte)</td>
+<td>8(1)</td>
+<td>16(2)</td>
+<td>32(4)</td>
+<td>64(8)</td>
+<td>64(8)</td>
+<td>32(4)</td>
+<td>64(8)</td>
+<td>64(8)</td>
+</tr>
+</tbody></table>
+<p>这里我们需要知道对于unsigned类型，其实就是将最高位变成符号位，不影响整个数据类型的长度。</p>
+<p>那么这道题我们用到的是int，现在一般机器都是64位，所以长度位32位。但是32位太长了，我们这里考虑<strong>8位</strong>如何进行加法的位运算。</p>
+<ul>
+<li><p>a^b,异或运算是进行无进位的加法运算</p>
+<p>a：0000 0101</p>
+<p>b：0000 0010</p>
+<p>a^b：0000 0111</p>
 </li>
-<li><p>递归</p>
-<p>前面都提到了这是一道典型的递归题，那么这里我们就要详细讲一讲递归了。对于递归来说，就是不断地调用直接来达到目的的方法。那么递归函数包含三个反面：退出条件，本轮函数需要干什么，返回什么。（为了方便大家理解，大家可以参照下面的代码理解，但是该代码并不能通过本题，因为会超时，只是为了方便大家理解）</p>
-<p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//退出条件</span></span><br><span class="line">	<span class="keyword">if</span>(n==<span class="number">0</span>||n==<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> n;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//本轮操作</span></span><br><span class="line">    <span class="keyword">int</span> num=fib(n-<span class="number">1</span>)+fib(n-<span class="number">2</span>);</span><br><span class="line">    <span class="comment">//返回什么	</span></span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在本次题目中，我们需要不断计算前两次的值，一直计算到$n=0和n=1$的情况，所以说，函数在这个条件下就停止了，所以这个就是退出条件，这个时候返回的值是确定的值，不能再是与自己函数相关的值了，那样递归不会结束，也不会有出口，直接导致函数结束不了。</p>
-<p>接下来，我们看本轮需要干什么，当前我们得到的数是n，那么我们知道我们需要返回的数值是输入为$n-1和n-2$返回数值的和，于是本轮我们需要计算这个数值。</p>
-<p>最后，我们需要返回什么，我们需要将我们计算的数值进行返回。</p>
-<p>以上就是解本题的步骤，递归是一个很好用的工具，大家需要多刷些递归的题目，来进行理解。</p>
-<p>那么本题其实并不适用于直接用递归来解决的原因是会出现重复的计算，那么可以通过下面这个图片来理解：</p>
-<p><img src="/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/lcoffer10-1-2.jpg"></p>
-<p>我们可以看见它出现了重复运算的情况，那么这个时候我们就要用到动态规划的数组，对已经计算的值进行储存，这样就不需要再重复计算了。</p>
+<li><p>(a&amp;b)&lt;&lt;1 获取进位</p>
+<p>a：0000 1111</p>
+<p>b：0000 0010</p>
+<p>(a&amp;b)&lt;&lt;1：0000 0010&lt;&lt;1 0000 0100</p>
+</li>
+<li><p>考虑是否溢出</p>
+<p>本题提示了：-1000 &lt;= a, b &lt;= 1000，所以不存在溢出的问题。</p>
 </li>
 </ul>
-<hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof">https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</li>
+<li><p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(b!=<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> cf=(a&amp;b)&lt;&lt;<span class="number">1</span>;</span><br><span class="line">        a=a^b;</span><br><span class="line">        b=cf;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么按照以上方式提交的结果则是：</p>
+<p><img src="/2021/09/26/LeetCode-371-%E4%B8%A4%E6%95%B4%E6%95%B0%E4%B9%8B%E5%92%8C/lc371-1.png"></p>
+</li>
+<li><p>python代码</p>
+<p>由于python的int类型的长度是无限长，所以对于python我们还需要通过取余的操作，让字符控制在32位长度。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MASK1 = <span class="number">4294967296</span>  <span class="comment"># 2^32</span></span><br><span class="line">MASK2 = <span class="number">2147483648</span>  <span class="comment"># 2^31</span></span><br><span class="line">MASK3 = <span class="number">2147483647</span>  <span class="comment"># 2^31-1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getSum</span>(<span class="params">self, a: <span class="built_in">int</span>, b: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">while</span> b != <span class="number">0</span>:</span><br><span class="line">            carry = ((a &amp; b) &lt;&lt; <span class="number">1</span>) % MASK1</span><br><span class="line">            a = (a ^ b) % MASK1</span><br><span class="line">            b = carry</span><br><span class="line">        <span class="keyword">if</span> a &amp; MASK2:  <span class="comment"># 负数</span></span><br><span class="line">            <span class="keyword">return</span> ~((a ^ MASK2) ^ MASK3)</span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># 正数</span></span><br><span class="line">            <span class="keyword">return</span> a</span><br></pre></td></tr></table></figure>
+
+<p>那么取得的结果为：</p>
+<p><img src="/2021/09/26/LeetCode-371-%E4%B8%A4%E6%95%B4%E6%95%B0%E4%B9%8B%E5%92%8C/lc371-2.png"></p>
+</li>
+</ul>
 
         </div>
 
@@ -302,7 +347,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/">https://tanwork.github.io/2021/09/04/LeetCode-%E5%89%91%E6%8C%87offer10-1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/09/26/LeetCode-371-%E4%B8%A4%E6%95%B4%E6%95%B0%E4%B9%8B%E5%92%8C/">https://tanwork.github.io/2021/09/26/LeetCode-371-%E4%B8%A4%E6%95%B4%E6%95%B0%E4%B9%8B%E5%92%8C/</a></span>
                     </p>
                 
                 
@@ -318,13 +363,11 @@
                     
                         <a href="/tags/LeetCode/"># LeetCode</a>
                     
-                        <a href="/tags/LeetCode-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"># LeetCode-动态规划</a>
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
                     
-                        <a href="/tags/LeetCode-%E7%AE%80%E5%8D%95/"># LeetCode-简单</a>
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
                     
-                        <a href="/tags/LeetCode-%E4%BA%86%E8%A7%A3/"># LeetCode-了解</a>
-                    
-                        <a href="/tags/LeetCode-%E9%80%92%E5%BD%92/"># LeetCode-递归</a>
+                        <a href="/tags/LeetCode-%E4%BD%8D%E8%BF%90%E7%AE%97/"># LeetCode-位运算</a>
                     
                         
                 </span>
@@ -337,10 +380,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C-Matlab%E7%AE%80%E5%8D%95%E5%85%A5%E9%97%A8/">机器学习笔记(二)-Matlab简单入门</a>
             
-            
-            <a class="next" rel="next" href="/2021/09/03/LeetCode-295-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">LeetCode-295-数据流的中位数</a>
+            <a class="next" rel="next" href="/2021/09/24/LeetCode-430-%E6%89%81%E5%B9%B3%E5%8C%96%E5%A4%9A%E7%BA%A7%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/">LeetCode-430-扁平化多级双向链表</a>
             
         </section>
 
