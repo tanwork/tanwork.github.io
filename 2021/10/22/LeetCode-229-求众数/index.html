@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-66-加一 | RonaldoIsFine’s</title>
+<title>LeetCode-229-求众数 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-66-加一</h1>
+            <h1 class="post-title">LeetCode-229-求众数</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 21, 2021&nbsp;&nbsp;10:52:03</a>
+                        Date: <a href="#">October 22, 2021&nbsp;&nbsp;11:26:29</a>
                         </span>
                     
                     
@@ -242,37 +242,51 @@
         </header>
 
         <div class="post-content">
-            <h4 id="66-加一"><a href="#66-加一" class="headerlink" title="66. 加一"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/plus-one/">66. 加一</a></h4><ul>
+            <h4 id="229-求众数-II"><a href="#229-求众数-II" class="headerlink" title="229. 求众数 II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/majority-element-ii/">229. 求众数 II</a></h4><ul>
 <li><p><strong>题目</strong></p>
-<p>给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。</p>
-<p>最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。</p>
-<p>你可以假设除了整数 0 之外，这个整数不会以零开头。</p>
+<p>给定一个大小为 <em>n</em> 的整数数组，找出其中所有出现超过 <code>⌊ n/3 ⌋</code> 次的元素。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>输入：digits = [1,2,3]<br>输出：[1,2,4]<br>解释：输入数组表示数字 123。</p>
+<p>输入：[3,2,3]<br>输出：[3]</p>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<p>输入：digits = [4,3,2,1]<br>输出：[4,3,2,2]<br>解释：输入数组表示数字 4321。</p>
+<p>输入：nums = [1]<br>输出：[1]</p>
 </blockquote>
 <ul>
-<li><p>难度：简单</p>
+<li><p>难度：中等</p>
 </li>
 <li><p>分类：多看</p>
 </li>
-<li><p>题解</p>
-<p>这道题虽说是简单题，但是还是有坑的。</p>
-<p>一开始的想法是通过将整个数求出来成一个整数，然后进行加一，再分解为各个数，这样算就一定会出错。因为例子的数据长度甚至比Long类型还长。所以这里我们用到进位标志CF。通过CF来判断每一位需要进行加的数据。</p>
+<li><p>题解1</p>
+<p>这题最简单的思路就是遍历一次数组，通过hashmap来存储数组每个值出现的次数，大于$frac{n}{3}$则保存到结果List中。</p>
 </li>
 <li><p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] plusOne(<span class="keyword">int</span>[] digits) &#123;</span><br><span class="line">    List&lt;Integer&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">int</span> carry=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=digits.length-<span class="number">1</span>;i&gt;-<span class="number">1</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">int</span> input_num=digits[i]+carry;</span><br><span class="line">        list.add(input_num%<span class="number">10</span>);</span><br><span class="line">        carry=input_num/<span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(carry!=<span class="number">0</span>)</span><br><span class="line">        list.add(carry);</span><br><span class="line">    <span class="keyword">int</span> len=list.size();</span><br><span class="line">    <span class="keyword">int</span> []res=<span class="keyword">new</span> <span class="keyword">int</span> [len];</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">        res[i]=list.get(len-i-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">majorityElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=nums.length;</span><br><span class="line">    HashMap&lt;Integer,Integer&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; res=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num:nums)&#123;</span><br><span class="line">        <span class="keyword">int</span> c=map.getOrDefault(num,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>(c==<span class="number">0</span>)&#123;</span><br><span class="line">            map.put(num,c+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            map.replace(num,c+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(c==len/<span class="number">3</span>)&#123;</span><br><span class="line">            res.add(num);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>该方法的时间复杂度为：log（n），只用了一次循环，但是消耗的空间复杂度比较大，因为用到了hashmap。</p>
 <p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2021/10/21/LeetCode-66-%E5%8A%A0%E4%B8%80/TL\ALter\CodeForPost\Blog\version2\myBlog\source_posts\lc66-1.png"></p>
+<p><img src="/2021/10/22/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0%5Clc229-1.png"></p>
+</li>
+<li><p>优化</p>
+<p>这里用到了<strong>摩尔投票法</strong>。</p>
+<p>​        摩尔投票法主要说的是统计出现次数超过$frac{n}{2}$的数，通过反证法可以知道，这样的数只有1个。那么我们可以通过不同则相抵消的方式，最后留下来的1个数则是出现次数超过$frac{n}{2}$的数。</p>
+<p>​        用到这道题就是统计出现次数超过$frac{n}{3}$的数，那么通过反证法知道，这样的数不超过2个，所以我们也可以用投票的方法来找到这两个数。</p>
+<p>​        程序步骤如下：</p>
+<ul>
+<li>首先遍历数组，通过抵消的方式找到剩下的两个数</li>
+<li>在遍历一次数组，判断这两个数是否满足条件</li>
+<li>将数组数据保存在结果中。</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">majorityElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len=nums.length;</span><br><span class="line">    <span class="keyword">int</span> element1=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> element2=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> time1=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> time2=<span class="number">0</span>;</span><br><span class="line">    List&lt;Integer&gt; res=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num:nums)&#123;</span><br><span class="line">        <span class="keyword">if</span>(time1&gt;<span class="number">0</span> &amp;&amp;element1==num)&#123;</span><br><span class="line">            time1++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(time2&gt;<span class="number">0</span> &amp;&amp; element2==num)&#123;</span><br><span class="line">            time2++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(time1==<span class="number">0</span>)&#123;</span><br><span class="line">            element1=num;</span><br><span class="line">            time1++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(time2==<span class="number">0</span>)&#123;</span><br><span class="line">            element2=num;</span><br><span class="line">            time2++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            time1--;</span><br><span class="line">            time2--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> cnt1=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> cnt2=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num:nums)&#123;</span><br><span class="line">        <span class="keyword">if</span>(num==element1)&#123;</span><br><span class="line">            cnt1++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(num==element2)&#123;</span><br><span class="line">            cnt2++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(cnt1&gt;len/<span class="number">3</span>)&#123;</span><br><span class="line">        res.add(element1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(cnt2&gt;len/<span class="number">3</span>)&#123;</span><br><span class="line">        res.add(element2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么取得的结果为：</p>
+<p><img src="/2021/10/22/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0%5Clc229-2.png"></p>
 <hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/plus-one">https://leetcode-cn.com/problems/plus-one</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/majority-element-ii">https://leetcode-cn.com/problems/majority-element-ii</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </li>
 </ul>
 
@@ -289,7 +303,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2021/10/21/LeetCode-66-%E5%8A%A0%E4%B8%80/">https://tanwork.github.io/2021/10/21/LeetCode-66-%E5%8A%A0%E4%B8%80/</a></span>
+                        <span><a href="https://tanwork.github.io/2021/10/22/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0/">https://tanwork.github.io/2021/10/22/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0/</a></span>
                     </p>
                 
                 
@@ -305,11 +319,11 @@
                     
                         <a href="/tags/LeetCode/"># LeetCode</a>
                     
+                        <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
                         <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
                     
-                        <a href="/tags/LeetCode-%E6%95%B0%E7%BB%84/"># LeetCode-数组</a>
-                    
-                        <a href="/tags/LeetCode-%E7%AE%80%E5%8D%95/"># LeetCode-简单</a>
+                        <a href="/tags/LeetCode-%E8%84%91%E7%AD%8B%E6%80%A5%E8%BD%AC%E5%BC%AF/"># LeetCode-脑筋急转弯</a>
                     
                         
                 </span>
@@ -322,10 +336,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/10/22/LeetCode-229-%E6%B1%82%E4%BC%97%E6%95%B0/">LeetCode-229-求众数</a>
             
-            
-            <a class="next" rel="next" href="/2021/10/20/LeetCode-453-%E6%9C%80%E5%B0%8F%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0%E4%BD%BF%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%9B%B8%E7%AD%89/">LeetCode-453-最小操作次数使数组元素相等</a>
+            <a class="next" rel="next" href="/2021/10/21/LeetCode-66-%E5%8A%A0%E4%B8%80/">LeetCode-66-加一</a>
             
         </section>
 
