@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="zn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <meta name="author" content="Tan.L">
+
+
+
+
+
+<title>算法-dijstra | RonaldoIsFine’s</title>
+
+
+
+    <link rel="icon" href="/image/top.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">RonaldoIsFine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">RonaldoIsFine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">算法-dijstra</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Tan.L</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 30, 2021&nbsp;&nbsp;16:20:53</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Dijstra/">Dijstra</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="Dijstra算法"><a href="#Dijstra算法" class="headerlink" title="Dijstra算法"></a>Dijstra算法</h3><ul>
+<li><p>简介</p>
+<p>Dijstra算法常用于求图的节点之间的最短路径。在数据结构的图的部分中是非常常见的也是非常基础的算法，应用场景也非常广泛，常用于计算机网络中，求路由节点间的最短距离和路径。本文对Dijstra算法进行详细介绍，并用Java实现了算法，进行了验证。</p>
+</li>
+<li><p>图的储存</p>
+<p>给你一个图，你会如何存储节点之间的关系呢？</p>
+<p>这里我们要引入邻接表的概念。直接说很抽线，直接上图。</p>
+<p><img src="/2021/10/30/%E7%AE%97%E6%B3%95-dijstra/%E7%AE%97%E6%B3%95-dijstra%5Car-1.PNG"></p>
+</li>
+</ul>
+<p>其邻接表为：</p>
+<p><strong>‘-‘表示距离无穷</strong></p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2</td>
+<td>0</td>
+<td>3</td>
+<td>2</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>E</td>
+<td>-</td>
+<td>-</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>F</td>
+<td>-</td>
+<td>-</td>
+<td>5</td>
+<td>-</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><strong>邻接表就是这样的二维数组，map[i][j]表示节点i到节点j的距离</strong></p>
+<ul>
+<li><p>关于上面的图我们要求A到其他所有节点的距离我们应该怎么求呢？这里我们用一个数组来存储A到各个节点的所有路径</p>
+<p>dst表：</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>很显然我们可以发现，这就是邻接表的A节点到各个点的距离。</p>
+<p>然后，<strong>找到距离A最近的点为：D，并且A到D的距离为1</strong></p>
+<p>那么我们看看A通过D节点到各个节点的距离是多少</p>
+<p>中间表：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1+1=2</td>
+<td>2+1=3</td>
+<td>3+1=4</td>
+<td>0+1=1</td>
+<td>1+1=2</td>
+<td>-+1=-</td>
+</tr>
+</tbody></table>
+<p>那么这个时候我们需要判断A到达其他节点的距离有没有必要经过节点D了，也就是比较dst表和中间表对于的值，取最小值</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B</th>
+<th>C</th>
+<th>D（isVisit）</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td><strong>4</strong></td>
+<td>1</td>
+<td><strong>2</strong></td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p><strong>然后我们在从这个dst表中，找到最短距离的节点，并且是没有访问过的</strong>，那么是B、E节点，这里我们随意选取B节点，距离为2</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2+2=4</td>
+<td>0+2=2</td>
+<td>3+2=5</td>
+<td>2+2=4</td>
+<td>-+2=-</td>
+<td>-+2=-</td>
+</tr>
+</tbody></table>
+<p>在与Dst表比较</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C</th>
+<th>D（isVisit）</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>发现表没有变化，这里我们再找到最短距离的节点，并且是没有访问过的，那么是E节点，距离2</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-+2=-</td>
+<td>-+2=-</td>
+<td>1+2=3</td>
+<td>1+2=3</td>
+<td>0+2=2</td>
+<td>2+2=4</td>
+</tr>
+</tbody></table>
+<p>在与Dst表比较</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C</th>
+<th>D（isVisit）</th>
+<th>E（isVisit）</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td><strong>3</strong></td>
+<td>1</td>
+<td>2</td>
+<td><strong>4</strong></td>
+</tr>
+</tbody></table>
+<p>这里我们再找到最短距离的节点，并且是没有访问过的，那么是C节点，距离3</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5+3=8</td>
+<td>3+3=6</td>
+<td>0+3=3</td>
+<td>3+3=6</td>
+<td>1+3=4</td>
+<td>5+3=8</td>
+</tr>
+</tbody></table>
+<p>在与Dst表比较</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C（isVisit）</th>
+<th>D（isVisit）</th>
+<th>E（isVisit）</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>最后是节点F，距离为4</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-+4=-</td>
+<td>-+4=-</td>
+<td>5+4=9</td>
+<td>-+4=-</td>
+<td>2+4=6</td>
+<td>0+4=4</td>
+</tr>
+</tbody></table>
+<p>在与Dst表比较</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C（isVisit）</th>
+<th>D（isVisit）</th>
+<th>E（isVisit）</th>
+<th>F（isVisit）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>那么这个表我们就得到了最短路径了。</p>
+<p>方便看，我们把邻接表拿下来看看：</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2</td>
+<td>0</td>
+<td>3</td>
+<td>2</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>E</td>
+<td>-</td>
+<td>-</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>F</td>
+<td>-</td>
+<td>-</td>
+<td>5</td>
+<td>-</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<ul>
+<li>我们求到了最小值，那么你或许会问，我们不知道这个路径怎么走的呀，这里我们用另外一个表来看，同时我们先用一个表来储存当</li>
+</ul>
+<p>D(node): A到node节点最短距离</p>
+<p>P(node)：node节点的前向节点</p>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>D（B）P（B）</th>
+<th>D（C）P（C）</th>
+<th>D（D）P（D）</th>
+<th>D（E）P（E）</th>
+<th>D（F）P（F）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>2A</td>
+<td>5A</td>
+<td>1A</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<ul>
+<li>找到距离A最短的节点 D</li>
+</ul>
+<p>上面方法的表中</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B</th>
+<th>C</th>
+<th>D（isVisit）</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td><strong>4</strong></td>
+<td>1</td>
+<td><strong>2</strong></td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>可以知道经过节点D<strong>后到节点C，E的距离近了</strong>，所以我们修改距离和前向表</p>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>D（B）P（B）</th>
+<th>D（C）P（C）</th>
+<th>D（D）P（D）</th>
+<th>D（E）P（E）</th>
+<th>D（F）P（F）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AD</td>
+<td>2A</td>
+<td>4D</td>
+<td>1A</td>
+<td>2D</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<ul>
+<li>找到距离最短的节点B</li>
+</ul>
+<p>上面方法的表中</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C</th>
+<th>D（isVisit）</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>发现表没有变化，则</p>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>D（B）P（B）</th>
+<th>D（C）P（C）</th>
+<th>D（D）P（D）</th>
+<th>D（E）P（E）</th>
+<th>D（F）P（F）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADB</td>
+<td>2A</td>
+<td>4D</td>
+<td>1A</td>
+<td>2D</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>找到距离最短的节点E</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C</th>
+<th>D（isVisit）</th>
+<th>E（isVisit）</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td><strong>3</strong></td>
+<td>1</td>
+<td>2</td>
+<td><strong>4</strong></td>
+</tr>
+</tbody></table>
+<p>发现C、F发生变化则：</p>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>D（B）P（B）</th>
+<th>D（C）P（C）</th>
+<th>D（D）P（D）</th>
+<th>D（E）P（E）</th>
+<th>D（F）P（F）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADBE</td>
+<td>2A</td>
+<td>3E</td>
+<td>1A</td>
+<td>2D</td>
+<td>4E</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>找到距离最短的节点C</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C（isVisit）</th>
+<th>D（isVisit）</th>
+<th>E（isVisit）</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>没有变化</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>D（B）P（B）</th>
+<th>D（C）P（C）</th>
+<th>D（D）P（D）</th>
+<th>D（E）P（E）</th>
+<th>D（F）P（F）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADBEC</td>
+<td>2A</td>
+<td>3E</td>
+<td>1A</td>
+<td>2D</td>
+<td>4E</td>
+</tr>
+</tbody></table>
+<p>找到距离最短的节点F</p>
+<table>
+<thead>
+<tr>
+<th>A（isVisit）</th>
+<th>B（isVisit）</th>
+<th>C（isVisit）</th>
+<th>D（isVisit）</th>
+<th>E（isVisit）</th>
+<th>F（isVisit）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>没有变化</p>
+<p><strong>则最终的表为</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>D（B）P（B）</th>
+<th>D（C）P（C）</th>
+<th>D（D）P（D）</th>
+<th>D（E）P（E）</th>
+<th>D（F）P（F）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADBE</td>
+<td>2A</td>
+<td>3E</td>
+<td>1A</td>
+<td>2D</td>
+<td>4E</td>
+</tr>
+</tbody></table>
+<p><strong>通过这个方法，我们可以知道最短距离同时知道最短路径是什么，但是这里我们得到的是前向表，我们还需要操作一下</strong></p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前向节点</td>
+<td>A</td>
+<td>E</td>
+<td>A</td>
+<td>D</td>
+<td>E</td>
+</tr>
+</tbody></table>
+<p>在算法中，我用的是链表，进行连接，比如当前节点是D节点，它的前向节点为A，则node D的指针指向A。这样最终就会得到连接的路径，我们需要找到达到当前节点的路径，只需要通过当前的node，遍历一遍就能达到A节点，然后再反向，就是从A节点到当前节点的路径了。那么直接上代码吧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.w3c.dom.Node;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[]pre;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">char</span> val;</span><br><span class="line">        <span class="keyword">public</span> Node next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> [] dijkstra(<span class="keyword">int</span> [][]map)&#123;</span><br><span class="line">        <span class="keyword">int</span> len=map.length;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//前向数组，储存通向该节点的前一个节点值</span></span><br><span class="line">        pre=<span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第一轮遍历，找到前向节点为A的值</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map[<span class="number">0</span>][i]!=Integer.MAX_VALUE)&#123;</span><br><span class="line">                pre[i]=<span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//保存最短距离的数组</span></span><br><span class="line">        <span class="keyword">int</span> []res=map[<span class="number">0</span>];</span><br><span class="line">        <span class="comment">//标记该节点是否被访问过了</span></span><br><span class="line">        <span class="keyword">boolean</span> []mark=<span class="keyword">new</span> <span class="keyword">boolean</span>[len];</span><br><span class="line">        Arrays.fill(mark,<span class="keyword">false</span>);</span><br><span class="line">        mark[<span class="number">0</span>]=<span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//当前访问节点</span></span><br><span class="line">        <span class="keyword">int</span> pre_node=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="comment">//找到第一个未被标记，并且到达前向节点距离最小的数。</span></span><br><span class="line">            pre_node=findArraysMinIndex(res,mark);</span><br><span class="line">            <span class="comment">//找到前向节点到达当前节点的距离</span></span><br><span class="line">            <span class="keyword">int</span> pre_value=res[pre_node];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;len;j++)&#123;</span><br><span class="line">                <span class="comment">//j节点到当前节点的距离不为无穷，则表示能够到达</span></span><br><span class="line">                <span class="keyword">if</span>(map[pre_node][j]!=Integer.MAX_VALUE)&#123;</span><br><span class="line">                    <span class="comment">//得到前向节点通过当前节点到达节点j的距离</span></span><br><span class="line">                    <span class="keyword">int</span> temp=map[pre_node][j]+pre_value;</span><br><span class="line">                    <span class="comment">//与前向节点直接到达节点j比较</span></span><br><span class="line">                    <span class="comment">//如果距离更短</span></span><br><span class="line">                    <span class="keyword">if</span>(temp&lt;res[j])&#123;</span><br><span class="line">                        <span class="comment">//修改达到节点j的最小值</span></span><br><span class="line">                        res[j]=temp;</span><br><span class="line">                        <span class="comment">//修改节点j的前向节点</span></span><br><span class="line">                        pre[j]=pre_node;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//标记当前节点已经被访问</span></span><br><span class="line">            mark[pre_node]=<span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//找到第一个未被标记，并且最小的数。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findArraysMinIndex</span><span class="params">(<span class="keyword">int</span> []res,<span class="keyword">boolean</span> []mark)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> min_value=Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">int</span> index=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;res.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(mark[i]==<span class="keyword">true</span>)&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(res[i]&lt;min_value)&#123;</span><br><span class="line">                min_value=res[i];</span><br><span class="line">                index=i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据前向数组，生成路径，通过字符串保存</span></span><br><span class="line">    <span class="keyword">public</span> String[]generatePath(<span class="keyword">int</span> []way)&#123;</span><br><span class="line"></span><br><span class="line">        String[]res=<span class="keyword">new</span> String[way.length];</span><br><span class="line">        Node [] node=<span class="keyword">new</span> Node[way.length];</span><br><span class="line">        <span class="comment">//生成链表</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;way.length;i++)&#123;</span><br><span class="line">            node[i]=<span class="keyword">new</span> Node();</span><br><span class="line">            node[i].val=(<span class="keyword">char</span>)(<span class="string">&#x27;A&#x27;</span>+i);</span><br><span class="line">            node[i].next=<span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//反向连接</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;way.length;i++)&#123;</span><br><span class="line">            node[i].next=node[way[i]];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//将方向路径逆转</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;way.length;i++)&#123;</span><br><span class="line">            Stack&lt;Character&gt;stack=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">            Node pre=node[i];</span><br><span class="line">            <span class="keyword">while</span>(pre!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                stack.add(pre.val);</span><br><span class="line">                pre=pre.next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            res[i]=<span class="string">&quot;A&quot;</span>;</span><br><span class="line">            stack.pop();</span><br><span class="line">            <span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">                res[i]+=<span class="string">&quot;-&gt;&quot;</span>;</span><br><span class="line">                res[i]+=stack.pop();</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO 自动生成的方法存根</span></span><br><span class="line">        Solution solution=<span class="keyword">new</span> Solution();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> max_value=Integer.MAX_VALUE;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> [][]map=&#123;</span><br><span class="line">                &#123;<span class="number">0</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">1</span>,max_value,max_value&#125;,</span><br><span class="line">                &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">2</span>,max_value,max_value&#125;,</span><br><span class="line">                &#123;<span class="number">5</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">5</span>&#125;,</span><br><span class="line">                &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">1</span>,max_value&#125;,</span><br><span class="line">                &#123;max_value,max_value,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,</span><br><span class="line">                &#123;max_value,max_value,<span class="number">5</span>,max_value,<span class="number">2</span>,<span class="number">0</span>&#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        int [][]map=&#123;</span></span><br><span class="line"><span class="comment">//            &#123;0,4,max_value,max_value,2,6&#125;,</span></span><br><span class="line"><span class="comment">//            &#123;4,0,max_value,3,max_value,1&#125;,</span></span><br><span class="line"><span class="comment">//            &#123;max_value,max_value,0,1,max_value,1&#125;,</span></span><br><span class="line"><span class="comment">//            &#123;max_value,3,1,0,max_value,max_value&#125;,</span></span><br><span class="line"><span class="comment">//            &#123;2,max_value,max_value,max_value,0,3&#125;,</span></span><br><span class="line"><span class="comment">//            &#123;6,max_value,1,max_value,3,0&#125;</span></span><br><span class="line"><span class="comment">//        &#125;;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> []res=solution.dijkstra(map);</span><br><span class="line"></span><br><span class="line">        String[]res_String =solution.generatePath(solution.pre);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;res.length;i++)&#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;A&#x27;</span>);</span><br><span class="line">            System.out.print(<span class="string">&quot;-&gt;&quot;</span>);</span><br><span class="line">            System.out.print((<span class="keyword">char</span>)(<span class="string">&#x27;A&#x27;</span>+i));</span><br><span class="line">            System.out.print(<span class="string">&quot; distance is:&quot;</span>);</span><br><span class="line">            System.out.print(res[i]);</span><br><span class="line">            System.out.print(<span class="string">&quot; &quot;</span>);</span><br><span class="line">            System.out.println(res_String[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>当然本博文不管是代码还是文章还有改进和优化空间，希望大家指出！笔者万分感谢！</strong></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Tan.L</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://tanwork.github.io/2021/10/30/%E7%AE%97%E6%B3%95-dijstra/">https://tanwork.github.io/2021/10/30/%E7%AE%97%E6%B3%95-dijstra/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Dijstra/"># Dijstra</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/10/24/LeetCode-638-%E5%A4%A7%E7%A4%BC%E5%8C%85/">LeetCode-638-大礼包</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Tan.L | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),     //置于主页面背后
+            o: n(i, "opacity", .5),     //线条透明度
+            c: n(i, "color", "0,0,0"),  //线条颜色
+            n: n(i, "count", 100)    //线条数量
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+
+</body>
+
+</html>
+
