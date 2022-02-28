@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <meta name="author" content="Tan.L">
+
+
+
+
+
+<title>Note-二分法 | RonaldoIsFine’s</title>
+
+
+
+    <link rel="icon" href="/image/top.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <!-- <script src="/themes/hexo-theme-Chic/layout/script2.js"></script> -->
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">RonaldoIsFine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">RonaldoIsFine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Note-二分法</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Tan.L</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">February 28, 2022&nbsp;&nbsp;9:06:55</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><p>在网上搜，能看见比较详细的二分法的介绍，但是笔者还是想去梳理一下，因为想要真正理解二分法的代码和二分法的原理是不一样的。首先，看一个比较常用的二分法算法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> nums[],<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    Arrays.sort(nums);</span><br><span class="line">    <span class="keyword">int</span> left=<span class="number">0</span>,right=nums.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(left&lt;=right)&#123;</span><br><span class="line">        <span class="keyword">int</span> mid=(left+right)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">            right=mid-<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            left=mid+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们主要从两个边界问题来考虑这个函数会怎么样:</p>
+<ul>
+<li><p>如果nums的取值范围在[a,b]，并且target值属于[a,b]，但是target不等于nums中的任意元素。对于这种情况下，我们能够得到binarySearch返回一个index值，但是nums[index]并不对于target。</p>
+<p>如nums=[0,1,2,3,4,5,6,7,8] target=2.5</p>
+<table>
+<thead>
+<tr>
+<th>轮次</th>
+<th>left</th>
+<th>right</th>
+<th>mid</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<p>最终输出的值为3，因为找不到target。</p>
+</li>
+<li><p>如果nums的取值范围在[a,b]，并且target值不属于[a,b]，<strong>则会出现超过数组的index</strong></p>
+<p>如nums=[0,1,2,3,4,5,6,7,8] target=9</p>
+<table>
+<thead>
+<tr>
+<th>轮次</th>
+<th>left</th>
+<th>right</th>
+<th>mid</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>5</td>
+<td>9</td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>最终输出的值是9，找不到index。</p>
+<p><strong>这个方法我们再找最终输出的index是否满足要求，需要判断index是否在nums数组范围的同时判断nums[index]是否对于target，这样子就比较麻烦，所以需要改进一下算法</strong></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> nums[],<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    Arrays.sort(nums);</span><br><span class="line">    <span class="keyword">int</span> left=<span class="number">0</span>,right=nums.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">        <span class="keyword">int</span> mid=(left+right)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">            right=mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            left=mid+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法就不会越界，但是还是需要判断nums[index]是否等于target。</p>
+<ul>
+<li><p>那么对于nums=[0,1,2,3,4,4,4,5,6,7]，target=4，并且我想得到<strong>最左边</strong>的4的下标，我们怎么改进算法呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> nums[],<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">     Arrays.sort(nums);</span><br><span class="line">     <span class="keyword">int</span> left=<span class="number">0</span>,right=nums.length-<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">         <span class="keyword">int</span> mid=(left+right)/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span>(nums[mid]&gt;=target)&#123;</span><br><span class="line">             right=mid;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span> &#123;</span><br><span class="line">             left=mid+<span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> left;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>同理，我们想找到<strong>最右边</strong>的4的下表，我们应该怎么改进呢?</p>
+<p>可以思考一下，然后见下面的答案：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> nums[],<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">     Arrays.sort(nums);</span><br><span class="line">     <span class="keyword">int</span> left=<span class="number">0</span>,right=nums.length-<span class="number">1</span>;</span><br><span class="line">     <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">         <span class="keyword">int</span> mid=(left+right)/<span class="number">2</span>+(left+right)%<span class="number">2</span>;</span><br><span class="line">         <span class="keyword">if</span>(nums[mid]&lt;=target)&#123;</span><br><span class="line">             left=mid;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span> &#123;</span><br><span class="line">             right=mid-<span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> right;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意这个mid是如何取值的，本质上也是相对于去最左边值的对偶关系</strong></p>
+</li>
+<li><p>那么介绍完了二分法了之后，可以尝试做一下leetcode题目</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-time-to-complete-trips/">https://leetcode-cn.com/problems/minimum-time-to-complete-trips/</a></p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Tan.L</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://tanwork.github.io/2022/02/28/Note-%E4%BA%8C%E5%88%86%E6%B3%95/">https://tanwork.github.io/2022/02/28/Note-%E4%BA%8C%E5%88%86%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Note/"># Note</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2022/02/24/LeetCode-1706-%E7%90%83%E4%BC%9A%E8%90%BD%E4%BD%95%E5%A4%84/">LeetCode-1706-球会落何处</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Tan.L | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script>
+!
+function() {
+    function n(n, e, t) {
+        return n.getAttribute(e) || t
+    }
+    function e(n) {
+        return document.getElementsByTagName(n)
+    }
+    function t() {
+        var t = e("script"),
+        o = t.length,
+        i = t[o - 1];
+        return {
+            l: o,
+            z: n(i, "zIndex", -1),     //置于主页面背后
+            o: n(i, "opacity", .5),     //线条透明度
+            c: n(i, "color", "0,0,0"),  //线条颜色
+            n: n(i, "count", 100)    //线条数量
+        }
+    }
+    function o() {
+        a = m.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        c = m.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+    function i() {
+        r.clearRect(0, 0, a, c);
+        var n, e, t, o, m, l;
+        s.forEach(function(i, x) {
+            for (i.x += i.xa, i.y += i.ya, i.xa *= i.x > a || i.x < 0 ? -1 : 1, i.ya *= i.y > c || i.y < 0 ? -1 : 1, r.fillRect(i.x - .5, i.y - .5, 1, 1), e = x + 1; e < u.length; e++) n = u[e],
+            null !== n.x && null !== n.y && (o = i.x - n.x, m = i.y - n.y, l = o * o + m * m, l < n.max && (n === y && l >= n.max / 2 && (i.x -= .03 * o, i.y -= .03 * m), t = (n.max - l) / n.max, r.beginPath(), r.lineWidth = t / 2, r.strokeStyle = "rgba(" + d.c + "," + (t + .2) + ")", r.moveTo(i.x, i.y), r.lineTo(n.x, n.y), r.stroke()))
+        }),
+        x(i)
+    }
+    var a, c, u, m = document.createElement("canvas"),
+    d = t(),
+    l = "c_n" + d.l,
+    r = m.getContext("2d"),
+    x = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(n) {
+        window.setTimeout(n, 1e3 / 45)
+    },
+    w = Math.random,
+    y = {
+        x: null,
+        y: null,
+        max: 2e4
+    };
+    m.id = l,
+    m.style.cssText = "position:fixed;top:0;left:0;z-index:" + d.z + ";opacity:" + d.o,
+    e("body")[0].appendChild(m),
+    o(),
+    window.onresize = o,
+    window.onmousemove = function(n) {
+        n = n || window.event,
+        y.x = n.clientX,
+        y.y = n.clientY
+    },
+    window.onmouseout = function() {
+        y.x = null,
+        y.y = null
+    };
+    for (var s = [], f = 0; d.n > f; f++) {
+        var h = w() * a,
+        g = w() * c,
+        v = 2 * w() - 1,
+        p = 2 * w() - 1;
+        s.push({
+            x: h,
+            y: g,
+            xa: v,
+            ya: p,
+            max: 6e3
+        })
+    }
+    u = s.concat([y]),
+    setTimeout(function() {
+        i()
+    },
+    100)
+} ();
+</script>
+
+</body>
+
+</html>
+
