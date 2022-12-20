@@ -14,7 +14,7 @@
 
 
 
-<title>LeetCode-5253-找到指定长度的回文数 | RonaldoIsFine’s</title>
+<title>LeetCode-1760-袋子里最少数目的球 | RonaldoIsFine’s</title>
 
 
 
@@ -217,7 +217,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">LeetCode-5253-找到指定长度的回文数</h1>
+            <h1 class="post-title">LeetCode-1760-袋子里最少数目的球</h1>
             
                 <div class="post-meta">
                     
@@ -226,7 +226,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">March 27, 2022&nbsp;&nbsp;12:22:27</a>
+                        Date: <a href="#">December 20, 2022&nbsp;&nbsp;12:56:40</a>
                         </span>
                     
                     
@@ -242,37 +242,39 @@
         </header>
 
         <div class="post-content">
-            <h1 id="5253-找到指定长度的回文数"><a href="#5253-找到指定长度的回文数" class="headerlink" title="5253. 找到指定长度的回文数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-palindrome-with-fixed-length/">5253. 找到指定长度的回文数</a></h1><ul>
+            <h1 id="1760-袋子里最少数目的球"><a href="#1760-袋子里最少数目的球" class="headerlink" title="1760. 袋子里最少数目的球"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/">1760. 袋子里最少数目的球</a></h1><ul>
 <li><p><strong>题目</strong></p>
-<p>给你一个整数数组 queries 和一个 正 整数 intLength ，请你返回一个数组 answer ，其中 answer[i] 是长度为 intLength 的 正回文数 中第 queries[i] 小的数字，如果不存在这样的回文数，则为 -1 。</p>
-<p>回文数 指的是从前往后和从后往前读一模一样的数字。回文数不能有前导 0 。</p>
+<p>给你一个整数数组 <code>nums</code> ，其中 <code>nums[i]</code> 表示第 <code>i</code> 个袋子里球的数目。同时给你一个整数 <code>maxOperations</code> 。</p>
+<p>你可以进行如下操作至多 <code>maxOperations</code> 次：</p>
+<ul>
+<li>选择任意一个袋子，并将袋子里的球分到 2 个新的袋子中，每个袋子里都有<strong>正整数</strong>个球。<ul>
+<li>比方说，一个袋子里有 <code>5</code> 个球，你可以把它们分到两个新袋子里，分别有 <code>1</code> 个和 <code>4</code> 个球，或者分别有 <code>2</code> 个和 <code>3</code> 个球。</li>
+</ul>
+</li>
+</ul>
+<p>你的开销是单个袋子里球数目的 <strong>最大值</strong> ，你想要 <strong>最小化</strong> 开销。</p>
+<p>请你返回进行上述操作后的最小开销。</p>
 </li>
 </ul>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>输入：queries = [1,2,3,4,5,90], intLength = 3<br>输出：[101,111,121,131,141,999]<br>解释：<br>长度为 3 的最小回文数依次是：<br>101, 111, 121, 131, 141, 151, 161, 171, 181, 191, 201, …<br>第 90 个长度为 3 的回文数是 999 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入：nums = [9], maxOperations = 2</span><br><span class="line">&gt;输出：3</span><br><span class="line">&gt;解释：</span><br><span class="line">&gt;- 将装有 9 个球的袋子分成装有 6 个和 3 个球的袋子。[9] -&gt; [6,3] 。</span><br><span class="line">&gt;- 将装有 6 个球的袋子分成装有 3 个和 3 个球的袋子。[6,3] -&gt; [3,3,3] 。</span><br><span class="line">&gt;装有最多球的袋子里装有 3 个球，所以开销为 3 并返回 3 。</span><br></pre></td></tr></table></figure>
 </blockquote>
 <ul>
 <li><p>难度：中等</p>
 </li>
-<li><p>分类：多做</p>
+<li><p>分类：多看</p>
 </li>
 <li><p>题解</p>
-<p>这题我是感觉非常有意思。</p>
-<p>回文数，我们则只需要考虑一半的数即可，剩余的只是翻转一下。</p>
-<p>也就是比如我们要生成一个4位的回文数，首先取一半即10，然后再翻转1001。</p>
-<p>那么低5个回文数则是14,然后翻转1441。</p>
-<p>本着这个思想，我们来实现以下代码。</p>
+<p>本题题解<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/solutions/2025611/dai-zi-li-zui-shao-shu-mu-de-qiu-by-leet-boay/">参照</a>。</p>
+<p>采用了二分法的思想。</p>
+<p>$y_{option}$具有上限和下限，下限就是1，上限就是最大值。不断列举不同的$y_{option}$计算对应的操作数目。很巧妙的方法。</p>
 </li>
 <li><p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">long</span>[] kthPalindrome(<span class="keyword">int</span>[] queries, <span class="keyword">int</span> intLength) &#123;</span><br><span class="line">    <span class="keyword">long</span> res[] = <span class="keyword">new</span> <span class="keyword">long</span>[queries.length];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; queries.length; i++) &#123;</span><br><span class="line">        <span class="keyword">long</span> temp = (<span class="keyword">long</span>) Math.pow(<span class="number">10</span>, (intLength - <span class="number">1</span>) / <span class="number">2</span>);</span><br><span class="line">        temp += queries[i];</span><br><span class="line">        String s = String.valueOf(temp);</span><br><span class="line">        res[i] = s.length() &gt; (intLength + <span class="number">1</span>) / <span class="number">2</span> ? -<span class="number">1</span> : Long.valueOf(s + <span class="keyword">new</span> StringBuffer(s.substring(<span class="number">0</span>, s.length() - intLength% <span class="number">2</span>)).reverse());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么按照以上方式提交的结果则是：</p>
-<p><img src="/2022/03/27/LeetCode-5253-%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%9B%9E%E6%96%87%E6%95%B0/code\Blog\version2\lc11091.png"></p>
-</li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumSize</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> maxOperations)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">1</span>,r=Arrays.stream(nums).max().getAsInt();</span><br><span class="line">    <span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        <span class="keyword">int</span> y=(l+r)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">long</span> ops=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x:nums)&#123;</span><br><span class="line">            ops+=(x-<span class="number">1</span>)/y;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ops&lt;=maxOperations)&#123;</span><br><span class="line">            r=y-<span class="number">1</span>;</span><br><span class="line">            ans=y;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            l=y+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <hr>
-<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-palindrome-with-fixed-length">https://leetcode-cn.com/problems/find-palindrome-with-fixed-length</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<p>来源：力扣（LeetCode）<br>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/map-sum-pairs">https://leetcode-cn.com/problems/map-sum-pairs</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 
         </div>
 
@@ -287,7 +289,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://tanwork.github.io/2022/03/27/LeetCode-5253-%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%9B%9E%E6%96%87%E6%95%B0/">https://tanwork.github.io/2022/03/27/LeetCode-5253-%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%9B%9E%E6%96%87%E6%95%B0/</a></span>
+                        <span><a href="https://tanwork.github.io/2022/12/20/LeetCode-1760-%E8%A2%8B%E5%AD%90%E9%87%8C%E6%9C%80%E5%B0%91%E6%95%B0%E7%9B%AE%E7%9A%84%E7%90%83/">https://tanwork.github.io/2022/12/20/LeetCode-1760-%E8%A2%8B%E5%AD%90%E9%87%8C%E6%9C%80%E5%B0%91%E6%95%B0%E7%9B%AE%E7%9A%84%E7%90%83/</a></span>
                     </p>
                 
                 
@@ -303,9 +305,11 @@
                     
                         <a href="/tags/LeetCode/"># LeetCode</a>
                     
-                        <a href="/tags/LeetCode-%E5%A4%9A%E5%81%9A/"># LeetCode-多做</a>
-                    
                         <a href="/tags/LeetCode-%E4%B8%AD%E7%AD%89/"># LeetCode-中等</a>
+                    
+                        <a href="/tags/LeetCode-%E5%A4%9A%E7%9C%8B/"># LeetCode-多看</a>
+                    
+                        <a href="/tags/LeetCode-%E6%95%B0%E7%BB%84/"># LeetCode-数组</a>
                     
                         
                 </span>
@@ -318,10 +322,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/12/20/LeetCode-1760-%E8%A2%8B%E5%AD%90%E9%87%8C%E6%9C%80%E5%B0%91%E6%95%B0%E7%9B%AE%E7%9A%84%E7%90%83/">LeetCode-1760-袋子里最少数目的球</a>
             
-            
-            <a class="next" rel="next" href="/2022/02/28/Note-%E4%BA%8C%E5%88%86%E6%B3%95/">Note-二分法</a>
+            <a class="next" rel="next" href="/2022/03/27/LeetCode-5253-%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E9%95%BF%E5%BA%A6%E7%9A%84%E5%9B%9E%E6%96%87%E6%95%B0/">LeetCode-5253-找到指定长度的回文数</a>
             
         </section>
 
